@@ -30,7 +30,7 @@ app.use(
     credentials: false,
   })
 );
-app.options("*", cors());
+app.options(/.*/, cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -560,6 +560,7 @@ mongoose
   .catch((err) => {
     console.error("DB connection error:", err);
   });
+
 
 
 
