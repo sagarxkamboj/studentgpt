@@ -1,831 +1,546 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>StudentGPT | AI Workspace</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>StudentGPT | Study Faster, Build Smarter</title>
+    <meta
+      name="description"
+      content="StudentGPT is a modern AI study partner for coding, assignments, projects, and exam prep."
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --bg: #07111f;
-        --bg-soft: #0d1b31;
-        --shell: rgba(8, 14, 28, 0.82);
-        --panel: rgba(12, 20, 36, 0.8);
-        --panel-soft: rgba(255, 255, 255, 0.04);
-        --line: rgba(165, 198, 255, 0.14);
-        --line-strong: rgba(165, 198, 255, 0.22);
+        --bg: #08111f;
+        --bg-soft: #0f1b30;
+        --panel: rgba(10, 18, 35, 0.72);
+        --panel-strong: rgba(8, 14, 28, 0.88);
+        --line: rgba(160, 196, 255, 0.14);
+        --line-strong: rgba(160, 196, 255, 0.24);
         --text: #edf4ff;
-        --muted: #9dafc7;
+        --muted: #9eb0c8;
         --accent: #74f2ce;
         --accent-2: #66a6ff;
         --accent-3: #ff9a62;
-        --user-bubble: linear-gradient(135deg, #66a6ff, #4b7dff);
-        --bot-bubble: rgba(255, 255, 255, 0.06);
-        --input: rgba(255, 255, 255, 0.05);
-        --shadow: 0 30px 90px rgba(0, 0, 0, 0.38);
+        --shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
+        --radius-xl: 30px;
+        --radius-lg: 22px;
       }
-
       body.light-mode {
-        --bg: #f3f7ff;
-        --bg-soft: #eaf0fb;
-        --shell: rgba(255, 255, 255, 0.84);
-        --panel: rgba(255, 255, 255, 0.94);
-        --panel-soft: rgba(20, 35, 70, 0.04);
-        --line: rgba(45, 77, 136, 0.14);
-        --line-strong: rgba(45, 77, 136, 0.22);
-        --text: #101a2b;
+        --bg: #f5f8ff;
+        --bg-soft: #eef3fb;
+        --panel: rgba(255, 255, 255, 0.72);
+        --panel-strong: rgba(255, 255, 255, 0.92);
+        --line: rgba(34, 66, 125, 0.12);
+        --line-strong: rgba(34, 66, 125, 0.2);
+        --text: #111b2d;
         --muted: #5d6d86;
         --accent: #0ea87e;
         --accent-2: #3f73ff;
         --accent-3: #ff7a3d;
-        --user-bubble: linear-gradient(135deg, #3f73ff, #2356eb);
-        --bot-bubble: rgba(20, 35, 70, 0.06);
-        --input: rgba(20, 35, 70, 0.04);
-        --shadow: 0 24px 72px rgba(57, 77, 120, 0.14);
+        --shadow: 0 24px 80px rgba(44, 62, 110, 0.12);
       }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      html,
-      body {
-        height: 100%;
-      }
-
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
       body {
         min-height: 100vh;
-        padding: 12px;
-        overflow: hidden;
         font-family: "Manrope", system-ui, sans-serif;
         color: var(--text);
         background:
-          radial-gradient(circle at 10% 10%, rgba(102, 166, 255, 0.18), transparent 24%),
-          radial-gradient(circle at 88% 12%, rgba(116, 242, 206, 0.14), transparent 22%),
-          radial-gradient(circle at 50% 100%, rgba(255, 154, 98, 0.12), transparent 26%),
-          linear-gradient(180deg, var(--bg), var(--bg-soft));
-        display: flex;
-        justify-content: center;
-        align-items: stretch;
+          radial-gradient(circle at 10% 10%, rgba(102, 166, 255, 0.18), transparent 28%),
+          radial-gradient(circle at 82% 18%, rgba(116, 242, 206, 0.14), transparent 25%),
+          radial-gradient(circle at 50% 80%, rgba(255, 154, 98, 0.1), transparent 22%),
+          linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 100%);
+        transition: background 0.35s ease, color 0.35s ease;
+        overflow-x: hidden;
       }
-
-      body::before,
-      body::after {
+      body::before, body::after {
         content: "";
         position: fixed;
-        width: 34rem;
-        height: 34rem;
+        width: 32rem;
+        height: 32rem;
         border-radius: 999px;
         filter: blur(90px);
-        opacity: 0.26;
         pointer-events: none;
+        opacity: 0.32;
+        z-index: 0;
       }
-
-      body::before {
-        top: -12rem;
-        left: -12rem;
-        background: rgba(102, 166, 255, 0.3);
-      }
-
-      body::after {
-        right: -10rem;
-        bottom: -12rem;
-        background: rgba(116, 242, 206, 0.22);
-      }
-
-      .sidebar-title,
-      .header-title,
-      .welcome-title,
-      .section-title {
-        font-family: "Space Grotesk", sans-serif;
-        letter-spacing: -0.04em;
-      }
-
-      .chatbot-wrapper {
-        position: relative;
-        z-index: 1;
-        width: 100%;
-        max-width: 1440px;
-        height: calc(100vh - 24px);
-        display: grid;
-        grid-template-columns: 290px minmax(0, 1fr);
-        background: var(--shell);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 34px;
-        overflow: hidden;
-        backdrop-filter: blur(20px);
+      body::before { top: -8rem; left: -8rem; background: rgba(102, 166, 255, 0.26); }
+      body::after { right: -8rem; bottom: -10rem; background: rgba(116, 242, 206, 0.22); }
+      a, button, input, textarea { font: inherit; }
+      .wrap { width: min(1180px, calc(100% - 32px)); margin: 0 auto; position: relative; z-index: 1; padding: 28px 0 56px; }
+      .shell {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        border-radius: 36px;
+        backdrop-filter: blur(18px);
+        padding: 18px;
         box-shadow: var(--shadow);
       }
-
-      .sidebar {
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
-        border-right: 1px solid var(--line);
-        padding: 20px 18px;
+      header {
+        position: sticky;
+        top: 14px;
+        z-index: 20;
         display: flex;
-        flex-direction: column;
-        gap: 14px;
-        min-height: 0;
-      }
-
-      .sidebar-header {
-        padding: 12px;
-        border-radius: 26px;
-        background: var(--panel-soft);
-        border: 1px solid var(--line);
-      }
-
-      .robot-image,
-      .welcome-logo {
-        background: url("Actual.png") no-repeat center/cover;
-        border: 1px solid var(--line-strong);
-      }
-
-      .robot-image {
-        width: 82px;
-        height: 82px;
-        border-radius: 24px;
-        box-shadow: 0 14px 34px rgba(102, 166, 255, 0.18);
-        margin-bottom: 12px;
-      }
-
-      .sidebar-title {
-        font-size: 1.3rem;
-        margin-bottom: 4px;
-      }
-
-      .sidebar-subtitle,
-      .workspace-card p,
-      .header-subtitle,
-      .welcome-subtitle,
-      .preview-card p,
-      .action-btn span,
-      .theme-switch-copy span {
-        color: var(--muted);
-        line-height: 1.65;
-      }
-
-      .workspace-card,
-      .action-btn,
-      .theme-switch-container {
-        border-radius: 24px;
-        background: var(--panel-soft);
-        border: 1px solid var(--line);
-      }
-
-      .workspace-card {
-        padding: 16px 15px;
-      }
-
-      .workspace-label {
-        display: inline-flex;
-        padding: 8px 12px;
-        border-radius: 999px;
-        font-size: 0.72rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: var(--accent);
-        background: rgba(116, 242, 206, 0.08);
-        border: 1px solid rgba(116, 242, 206, 0.18);
-        margin-bottom: 12px;
-      }
-
-      .action-buttons {
-        display: grid;
-        gap: 12px;
-      }
-
-      .action-btn {
-        padding: 12px;
-        text-align: left;
-        color: var(--text);
-        cursor: pointer;
-        transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-      }
-
-      .action-btn strong {
-        display: block;
-        margin-bottom: 5px;
-        font-size: 1rem;
-      }
-
-      .action-btn:hover {
-        transform: translateY(-2px);
-        border-color: var(--line-strong);
-        background: rgba(255, 255, 255, 0.06);
-      }
-
-      .theme-switch-container {
-        margin-top: auto;
-        padding: 12px;
-      }
-
-      .theme-switch {
-        display: flex;
-        align-items: flex-start;
-        justify-content: flex-start;
-        gap: 14px;
-      }
-
-      .theme-switch-copy strong {
-        display: block;
-        margin-bottom: 4px;
-      }
-
-      .switch {
-        position: relative;
-        display: inline-block;
-        width: 48px;
-        height: 28px;
-      }
-
-      .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-      }
-
-      .slider {
-        position: absolute;
-        inset: 0;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.12);
-        transition: 0.3s ease;
-      }
-
-      .slider:before {
-        content: "";
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        left: 4px;
-        bottom: 4px;
-        border-radius: 50%;
-        background: #fff;
-        transition: 0.3s ease;
-      }
-
-      input:checked + .slider {
-        background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      }
-
-      input:checked + .slider:before {
-        transform: translateX(20px);
-      }
-
-      .chat-container {
-        min-width: 0;
-        min-height: 0;
-        display: grid;
-        grid-template-rows: auto minmax(0, 1fr) auto;
-      }
-
-      .chat-header {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 14px;
-        padding: 16px 20px;
-        border-bottom: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.03);
-      }
-
-      .header-copy {
-        min-width: 0;
-      }
-
-      .header-title {
-        font-size: 1.48rem;
-        margin-bottom: 4px;
-      }
-
-      .header-subtitle {
-        font-size: 0.93rem;
-      }
-
-      .user-panel {
-        display: flex;
-        gap: 12px;
-        align-items: flex-start;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
         padding: 12px 14px;
         border-radius: 24px;
-        background: var(--panel-soft);
+        background: var(--panel);
         border: 1px solid var(--line);
+        backdrop-filter: blur(18px);
       }
-
-      .user-badge {
-        width: 48px;
-        height: 48px;
-        border-radius: 16px;
-        display: grid;
-        place-items: center;
-        background: linear-gradient(135deg, rgba(116, 242, 206, 0.16), rgba(102, 166, 255, 0.18));
-        font-weight: 800;
+      .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; color: inherit; }
+      .logo {
+        width: 54px; height: 54px; border-radius: 18px; background: linear-gradient(135deg, rgba(116, 242, 206, 0.26), rgba(102, 166, 255, 0.28));
+        border: 1px solid var(--line-strong); display: grid; place-items: center;
       }
-
-      .user-info strong {
-        display: block;
-        font-size: 0.96rem;
-        font-weight: 700;
+      .logo img { width: 40px; height: 40px; object-fit: cover; border-radius: 12px; }
+      .brand-title .title { font-family: "Space Grotesk", sans-serif; font-size: 1.08rem; font-weight: 700; letter-spacing: -0.03em; }
+      .brand-title .sub { color: var(--muted); font-size: 0.82rem; }
+      nav { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+      .nav-link, .btn { border-radius: 999px; transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease, color 0.22s ease, box-shadow 0.22s ease; }
+      .nav-link { text-decoration: none; color: var(--muted); padding: 10px 14px; font-weight: 600; border: 1px solid transparent; }
+      .nav-link:hover { color: var(--text); background: rgba(255, 255, 255, 0.05); border-color: var(--line); transform: translateY(-1px); }
+      .btn { border: 1px solid var(--line); padding: 12px 18px; cursor: pointer; background: transparent; color: var(--text); font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 10px; }
+      .btn:hover { transform: translateY(-2px); }
+      .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #07111f; border-color: transparent; box-shadow: 0 16px 34px rgba(102, 166, 255, 0.22); }
+      .btn-outline { background: rgba(255, 255, 255, 0.03); }
+      .hero { margin-top: 26px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr); gap: 22px; }
+      .hero-copy, .hero-visual, .panel, .feature, .quote, .contact-card {
+        background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-xl); backdrop-filter: blur(18px); box-shadow: var(--shadow);
       }
-
-      .user-info small {
-        color: var(--muted);
-        display: block;
-        margin-top: 2px;
+      .hero-copy { padding: 32px; position: relative; overflow: hidden; }
+      .hero-copy::after { content: ""; position: absolute; inset: auto -100px -100px auto; width: 260px; height: 260px; background: radial-gradient(circle, rgba(116, 242, 206, 0.22), transparent 65%); }
+      .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line-strong); background: rgba(255,255,255,0.05); color: var(--accent); font-weight: 800; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; }
+      h1, h2, h3 { font-family: "Space Grotesk", sans-serif; letter-spacing: -0.04em; }
+      h1 { font-size: clamp(2.7rem, 6vw, 5rem); line-height: 0.95; margin: 20px 0 16px; max-width: 10ch; }
+      .accent-text { background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent-3)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+      .lead { color: var(--muted); font-size: 1.05rem; line-height: 1.8; max-width: 58ch; }
+      .hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+      .hero-meta { margin-top: 28px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+      .stat { padding: 18px; border-radius: 20px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); }
+      .stat strong { display: block; font-size: 1.45rem; margin-bottom: 6px; }
+      .stat span { color: var(--muted); font-size: 0.92rem; }
+      .hero-visual { padding: 20px; position: relative; overflow: hidden; min-height: 560px; }
+      .hero-visual::before { content: ""; position: absolute; inset: 24px; border-radius: 28px; border: 1px solid rgba(255,255,255,0.06); background: linear-gradient(140deg, rgba(255,255,255,0.06), transparent 42%), linear-gradient(180deg, rgba(8,18,35,0.72), rgba(10,15,29,0.24)); }
+      .orb { position: absolute; border-radius: 999px; filter: blur(12px); opacity: 0.9; animation: float 7s ease-in-out infinite; }
+      .orb.one { width: 120px; height: 120px; top: 42px; right: 34px; background: rgba(102,166,255,0.36); }
+      .orb.two { width: 90px; height: 90px; bottom: 90px; left: 24px; animation-delay: -2s; background: rgba(255,154,98,0.28); }
+      .dashboard { position: relative; z-index: 1; height: 100%; display: grid; grid-template-rows: auto auto 1fr auto; gap: 14px; padding: 18px; }
+      .dash-top, .mini-card, .message, .task-row, .signal { border-radius: 22px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.05); }
+      .dash-top { padding: 16px 18px; display: flex; justify-content: space-between; align-items: center; }
+      .dash-title { font-size: 0.84rem; color: var(--muted); }
+      .dash-top strong { display: block; margin-top: 5px; font-size: 1.18rem; }
+      .live-pill { padding: 9px 14px; border-radius: 999px; background: rgba(116,242,206,0.12); color: var(--accent); font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+      .mini-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+      .mini-card { padding: 14px; }
+      .mini-card span { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 8px; }
+      .mini-card strong { font-size: 1.1rem; }
+      .chat-shell { display: grid; gap: 12px; }
+      .message { padding: 14px 16px; line-height: 1.6; }
+      .message.bot { margin-right: 42px; }
+      .message.user { margin-left: 42px; background: linear-gradient(135deg, rgba(102,166,255,0.18), rgba(116,242,206,0.12)); }
+      .task-list { display: grid; gap: 10px; }
+      .task-row { padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; color: var(--muted); }
+      .task-row strong { color: var(--text); font-size: 0.96rem; }
+      .signal { padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+      .signal-bars { display: inline-flex; gap: 6px; align-items: flex-end; height: 18px; }
+      .signal-bars span { width: 6px; border-radius: 999px; background: linear-gradient(180deg, var(--accent), var(--accent-2)); animation: pulseBars 1.8s ease-in-out infinite; }
+      .signal-bars span:nth-child(1) { height: 8px; }
+      .signal-bars span:nth-child(2) { height: 14px; animation-delay: 0.2s; }
+      .signal-bars span:nth-child(3) { height: 18px; animation-delay: 0.4s; }
+      .signal-bars span:nth-child(4) { height: 12px; animation-delay: 0.6s; }
+      section { margin-top: 26px; }
+      .section-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+      .section-head p { color: var(--muted); max-width: 58ch; line-height: 1.7; }
+      h2 { font-size: clamp(2rem, 3vw, 3rem); margin-bottom: 10px; }
+      .features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+      .feature, .panel, .quote, .contact-card { padding: 24px; }
+      .feature { position: relative; overflow: hidden; min-height: 240px; }
+      .feature::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent 56%); }
+      .icon-badge { width: 54px; height: 54px; border-radius: 18px; display: grid; place-items: center; font-family: "Space Grotesk", sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 18px; color: #08111f; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: 0 10px 28px rgba(102,166,255,0.22); }
+      .feature h3, .panel h3, .quote h3, .contact-card h3 { font-size: 1.45rem; margin-bottom: 10px; }
+      .feature p, .panel p, .quote p, .contact-card p, .about-copy p, .about-list li { color: var(--muted); line-height: 1.8; }
+      .about-grid, .why-grid, .testimonial-grid, .contact-grid { display: grid; gap: 18px; }
+      .about-grid { grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr); }
+      .about-copy, .about-list, .quote { padding: 26px; }
+      .about-copy, .about-list { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-xl); }
+      .about-list ul { list-style: none; display: grid; gap: 14px; }
+      .about-list li { padding: 14px 16px; border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); }
+      .about-list strong { color: var(--text); }
+      .why-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .panel { min-height: 220px; }
+      .panel-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+      .panel-tag { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); font-weight: 800; }
+      .score { color: var(--text); font-size: 0.92rem; padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,0.05); }
+      .testimonial-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .quote { min-height: 220px; }
+      .quote-mark { font-size: 3rem; line-height: 1; opacity: 0.28; color: var(--accent); }
+      .quote strong { display: inline-block; margin-top: 18px; color: var(--text); }
+      .contact-grid { grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr); }
+      .contact-card { min-height: 100%; }
+      .contact-stats { display: grid; gap: 12px; margin-top: 20px; }
+      .contact-stat { padding: 14px 16px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04); }
+      .contact-form { padding: 26px; }
+      .form-grid { display: grid; gap: 14px; }
+      .field-label { display: block; margin-bottom: 8px; font-size: 0.92rem; font-weight: 700; color: var(--text); }
+      input, textarea { width: 100%; padding: 16px 18px; border-radius: 18px; border: 1px solid var(--line); background: rgba(255,255,255,0.05); color: var(--text); outline: none; transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease; }
+      input::placeholder, textarea::placeholder { color: var(--muted); }
+      input:focus, textarea:focus { border-color: rgba(116,242,206,0.5); box-shadow: 0 0 0 4px rgba(116,242,206,0.1); transform: translateY(-1px); }
+      textarea { resize: vertical; min-height: 160px; }
+      .form-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+      #contactStatus { color: var(--muted); font-size: 0.95rem; }
+      footer { margin-top: 26px; padding: 20px 6px 6px; display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; color: var(--muted); }
+      footer a { color: inherit; text-decoration: none; }
+      .footer-links { display: flex; gap: 16px; flex-wrap: wrap; }
+      .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s ease, transform 0.7s ease; }
+      .reveal.is-visible { opacity: 1; transform: translateY(0); }
+      .float-in { animation: enterUp 0.8s ease both; }
+      .delay-1 { animation-delay: 0.08s; }
+      .delay-2 { animation-delay: 0.16s; }
+      @keyframes enterUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes float { 0%,100% { transform: translateY(0px) translateX(0px); } 50% { transform: translateY(-18px) translateX(8px); } }
+      @keyframes pulseBars { 0%,100% { transform: scaleY(0.72); opacity: 0.65; } 50% { transform: scaleY(1); opacity: 1; } }
+      @media (max-width: 1080px) {
+        .hero, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+        .features, .why-grid, .testimonial-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       }
-
-      .logout-btn {
-        margin-top: 8px;
-        border: none;
-        border-radius: 999px;
-        padding: 8px 12px;
-        font-size: 0.82rem;
-        font-weight: 700;
-        color: var(--text);
-        background: rgba(255, 255, 255, 0.08);
-        cursor: pointer;
-      }
-
-      .chat-messages {
-        min-width: 0;
-        min-height: 0;
-        overflow-y: auto;
-        padding: 14px 18px;
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-      }
-
-      .chat-messages::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      .chat-messages::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.12);
-        border-radius: 999px;
-      }
-
-      .welcome-container {
-        display: grid;
-        grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
-        gap: 12px;
-        align-items: start;
-      }
-
-      .welcome-hero,
-      .welcome-side {
-        border-radius: 26px;
-        border: 1px solid var(--line);
-        background: var(--panel-soft);
-        padding: 16px;
-      }
-
-      .welcome-hero {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-      }
-
-      .welcome-logo {
-        width: 68px;
-        height: 68px;
-        margin-bottom: 12px;
-        border-radius: 22px;
-      }
-
-      .welcome-title {
-        font-size: clamp(1.5rem, 2.6vw, 2.2rem);
-        line-height: 0.98;
-        margin-bottom: 10px;
-        max-width: 9ch;
-      }
-
-      .welcome-subtitle {
-        max-width: 56ch;
-      }
-
-      .welcome-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-        margin-top: 16px;
-      }
-
-      .welcome-chip,
-      .preview-card {
-        padding: 12px 14px;
-        border-radius: 20px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-      }
-
-      .welcome-chip strong,
-      .section-title {
-        display: block;
-        margin-bottom: 6px;
-      }
-
-      .welcome-chip span {
-        color: var(--muted);
-        font-size: 0.88rem;
-        line-height: 1.55;
-      }
-
-      .welcome-side {
-        display: grid;
-        gap: 12px;
-      }
-
-      .section-title {
-        font-size: 1.08rem;
-      }
-
-      .preview-card p {
-        margin-top: 6px;
-        font-size: 0.92rem;
-      }
-
-      .message {
-        display: flex;
-        flex-direction: column;
-        max-width: min(76%, 760px);
-        line-height: 1.65;
-        animation: fadeInUp 0.35s ease-out;
-      }
-
-      .message-content {
-        padding: 14px 16px;
-        font-size: 0.97rem;
-        word-wrap: break-word;
-        border: 1px solid rgba(255, 255, 255, 0.04);
-      }
-
-      .bot-message {
-        align-self: flex-start;
-      }
-
-      .bot-message .message-content {
-        background: var(--bot-bubble);
-        color: var(--text);
-        border-radius: 22px 22px 22px 8px;
-      }
-
-      .user-message {
-        align-self: flex-end;
-      }
-
-      .user-message .message-content {
-        background: var(--user-bubble);
-        color: #fff;
-        border-radius: 22px 22px 8px 22px;
-        border: none;
-      }
-
-      .message-time {
-        font-size: 0.72rem;
-        color: var(--muted);
-        margin-top: 7px;
-      }
-
-      .bot-message .message-time {
-        align-self: flex-start;
-      }
-
-      .user-message .message-time {
-        align-self: flex-end;
-      }
-
-      .chat-input-area {
-        padding: 14px 18px 18px;
-        border-top: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.03);
-      }
-
-      .chat-input-form {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 12px;
-        align-items: end;
-      }
-
-      #userInput {
-        width: 100%;
-        min-height: 54px;
-        background: var(--input);
-        color: var(--text);
-        font-size: 0.97rem;
-        padding: 14px 16px;
-        border-radius: 20px;
-        border: 1px solid var(--line);
-        outline: none;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
-      }
-
-      #userInput::placeholder {
-        color: var(--muted);
-      }
-
-      #userInput:focus {
-        border-color: rgba(116, 242, 206, 0.52);
-        box-shadow: 0 0 0 4px rgba(116, 242, 206, 0.08);
-      }
-
-      .send-button {
-        border: none;
-        min-width: 132px;
-        min-height: 54px;
-        border-radius: 20px;
-        background: linear-gradient(135deg, var(--accent), var(--accent-2));
-        color: #07111f;
-        font-weight: 800;
-        font-size: 0.96rem;
-        cursor: pointer;
-        box-shadow: 0 16px 34px rgba(102, 166, 255, 0.2);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-      }
-
-      .send-button:hover {
-        transform: translateY(-2px);
-      }
-
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(16px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @media (max-height: 860px) {
-        .sidebar {
-          padding: 16px 14px;
-          gap: 12px;
-        }
-
-        .workspace-card,
-        .action-btn,
-        .theme-switch-container {
-          border-radius: 18px;
-        }
-
-        .workspace-card {
-          padding: 14px 12px;
-        }
-
-        .action-btn {
-          padding: 11px 12px;
-        }
-
-        .chat-header {
-          padding: 14px 16px;
-        }
-
-        .header-title {
-          font-size: 1.3rem;
-        }
-
-        .header-subtitle {
-          font-size: 0.88rem;
-        }
-
-        .welcome-container {
-          gap: 10px;
-        }
-
-        .welcome-hero,
-        .welcome-side {
-          padding: 14px;
-          border-radius: 20px;
-        }
-
-        .welcome-logo {
-          width: 58px;
-          height: 58px;
-          margin-bottom: 10px;
-        }
-
-        .welcome-title {
-          font-size: clamp(1.35rem, 2vw, 1.9rem);
-          margin-bottom: 8px;
-        }
-
-        .welcome-subtitle {
-          line-height: 1.55;
-          font-size: 0.92rem;
-        }
-
-        .welcome-grid {
-          grid-template-columns: 1fr;
-          margin-top: 14px;
-        }
-
-        .welcome-chip,
-        .preview-card {
-          padding: 10px 12px;
-        }
-
-        .preview-card:last-child {
-          display: none;
-        }
-
-        .chat-messages {
-          padding: 12px 14px;
-        }
-
-        .chat-input-area {
-          padding: 12px 14px 14px;
-        }
-      }
-
-      @media (max-width: 1180px) {
-        .welcome-container {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      @media (max-width: 980px) {
-        body {
-          padding: 10px;
-        }
-
-        .chatbot-wrapper {
-          grid-template-columns: 1fr;
-          height: calc(100vh - 20px);
-          border-radius: 24px;
-        }
-
-        .sidebar {
-          display: none;
-        }
-
-        .chat-header {
-          grid-template-columns: 1fr;
-        }
-
-        .user-panel {
-          justify-content: flex-start;
-        }
-      }
-
-      @media (max-width: 640px) {
-        .chat-messages,
-        .chat-input-area,
-        .chat-header {
-          padding-left: 16px;
-          padding-right: 16px;
-        }
-
-        .welcome-hero,
-        .welcome-side {
-          padding: 16px;
-          border-radius: 22px;
-        }
-
-        .welcome-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .message {
-          max-width: 88%;
-        }
-
-        .chat-input-form {
-          grid-template-columns: 1fr;
-        }
-
-        .send-button {
-          width: 100%;
-        }
+      @media (max-width: 760px) {
+        .wrap { width: min(100% - 18px, 1180px); padding-top: 18px; }
+        .shell { border-radius: 24px; padding: 12px; }
+        header { position: static; padding: 14px; border-radius: 20px; }
+        nav { width: 100%; justify-content: flex-start; }
+        h1 { max-width: none; font-size: clamp(2.4rem, 13vw, 4rem); }
+        .hero-copy, .hero-visual, .feature, .panel, .quote, .contact-card, .contact-form, .about-copy, .about-list { padding: 20px; border-radius: 24px; }
+        .hero-meta, .mini-grid, .features, .why-grid, .testimonial-grid { grid-template-columns: 1fr; }
+        .hero-visual { min-height: auto; }
       }
     </style>
   </head>
   <body>
-    <div class="chatbot-wrapper" role="main">
-      <aside class="sidebar" aria-label="Character and actions">
-        <div class="sidebar-header">
-          <div class="robot-image" role="img" aria-label="Robot avatar"></div>
-          <h2 class="sidebar-title">StudentGPT</h2>
-          <p class="sidebar-subtitle">Your premium AI workspace for coding, assignments, and project execution.</p>
-        </div>
-
-        <div class="workspace-card">
-          <span class="workspace-label">Workspace mode</span>
-          <p>
-            Keep your flow sharp with fast answers, cleaner explanations, and a chat experience that feels more like a modern product than a basic student tool.
-          </p>
-        </div>
-
-        <div class="action-buttons" role="toolbar">
-          <button class="action-btn" type="button">
-            <strong>Planning</strong>
-            <span>Break ideas into steps, milestones, and buildable tasks.</span>
-          </button>
-          <button class="action-btn" type="button">
-            <strong>Building</strong>
-            <span>Generate logic, structure, and code-ready guidance faster.</span>
-          </button>
-          <button class="action-btn" type="button">
-            <strong>Monitoring</strong>
-            <span>Debug issues, review output, and stay on top of progress.</span>
-          </button>
-        </div>
-
-        <div class="theme-switch-container">
-          <label class="theme-switch">
-            <div class="theme-switch-copy">
-              <strong>Theme</strong>
-              <span>Switch visual mode</span>
+    <div class="wrap">
+      <div class="shell">
+        <header class="float-in">
+          <a class="brand" href="#">
+            <span class="logo"><img src="Actual.png" alt="StudentGPT logo" /></span>
+            <div class="brand-title">
+              <div class="title">StudentGPT</div>
+              <div class="sub">Modern AI study partner for builders</div>
             </div>
-            <div class="switch">
-              <input type="checkbox" id="theme-toggle" />
-              <span class="slider"></span>
-            </div>
-          </label>
-        </div>
-      </aside>
-
-      <section class="chat-container">
-        <header class="chat-header">
-          <div class="header-copy">
-            <h2 class="header-title">AI Conversation</h2>
-            <p class="header-subtitle">
-              Ask for code help, assignment breakdowns, viva prep, explanations, or project guidance. The underlying chatbot flow is unchanged.
-            </p>
-          </div>
-
-          <div class="user-panel">
-            <div class="user-badge">AI</div>
-            <div class="user-info">
-              <strong id="userName"></strong>
-              <small id="userEmail"></small>
-              <button id="logoutBtn" class="logout-btn" type="button">Logout</button>
-            </div>
-          </div>
+          </a>
+          <nav>
+            <a class="nav-link" href="#features">Features</a>
+            <a class="nav-link" href="#about">About</a>
+            <a class="nav-link" href="#why">Why Us</a>
+            <a class="nav-link" href="#testimonials">Reviews</a>
+            <a class="nav-link" href="#contact">Contact</a>
+            <button id="mode-btn" class="btn btn-outline" type="button">Moon</button>
+          </nav>
         </header>
+        <section class="hero">
+          <div class="hero-copy float-in delay-1">
+            <span class="eyebrow">Built for assignments, code, and project pressure</span>
+            <h1>
+              Study faster.
+              <span class="accent-text">Ship smarter.</span>
+              Stress less.
+            </h1>
+            <p class="lead">
+              StudentGPT helps you turn messy coursework into clean progress with runnable code,
+              step-by-step explanations, debugging help, revision support, and project planning
+              that actually feels built for students.
+            </p>
+            <div class="hero-ctas">
+              <a class="btn btn-primary" href="Login.html">Launch Workspace</a>
+              <a class="btn btn-outline" href="#features">See the Flow</a>
+            </div>
+            <div class="hero-meta">
+              <div class="stat"><strong>24/7</strong><span>Always-on help for late-night deadlines</span></div>
+              <div class="stat"><strong>Fast</strong><span>Answers tuned for coursework and practical tasks</span></div>
+              <div class="stat"><strong>Clean</strong><span>Explains the logic, not just the output</span></div>
+            </div>
+          </div>
 
-        <div class="chat-messages" id="messages" aria-live="polite">
-          <div class="welcome-container" id="welcome-container">
-            <div class="welcome-hero">
+          <div class="hero-visual float-in delay-2">
+            <span class="orb one"></span>
+            <span class="orb two"></span>
+            <div class="dashboard">
+              <div class="dash-top">
+                <div>
+                  <span class="dash-title">StudentGPT Session</span>
+                  <strong>Assignment Mode Active</strong>
+                </div>
+                <span class="live-pill">Live Assist</span>
+              </div>
+              <div class="mini-grid">
+                <div class="mini-card"><span>Focus</span><strong>Code + Theory</strong></div>
+                <div class="mini-card"><span>Speed</span><strong>Quick Output</strong></div>
+                <div class="mini-card"><span>Format</span><strong>Student Friendly</strong></div>
+              </div>
+              <div class="chat-shell">
+                <div class="message bot">I can break your DBMS assignment into short answers, long answers, and viva-ready points.</div>
+                <div class="message user">Also give me the code explanation and common interview questions.</div>
+                <div class="message bot">Done. I will add code, flow, edge cases, and a crisp explanation section so it feels submission-ready.</div>
+              </div>
+              <div class="task-list">
+                <div class="task-row"><strong>Debug stack trace</strong><span>Completed</span></div>
+                <div class="task-row"><strong>Generate clean answer draft</strong><span>In progress</span></div>
+                <div class="task-row"><strong>Prepare viva points</strong><span>Queued</span></div>
+              </div>
+              <div class="signal">
+                <div>
+                  <strong>Momentum</strong>
+                  <p style="color: var(--muted); margin-top: 4px">Built to make hard work feel less chaotic.</p>
+                </div>
+                <div class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="features" class="reveal">
+          <div class="section-head">
+            <div>
+              <h2>Made for the way students actually work</h2>
+              <p>
+                Not a generic prompt box. StudentGPT is shaped around assignments, coding roadblocks,
+                exam prep, and project execution so the interface feels purposeful from the first scroll.
+              </p>
+            </div>
+          </div>
+          <div class="features">
+            <article class="feature reveal">
+              <div class="icon-badge">01</div>
+              <h3>Runnable Code</h3>
+              <p>Generate working examples for Python, JavaScript, and Java with cleaner structure, comments, and practical explanation.</p>
+            </article>
+            <article class="feature reveal">
+              <div class="icon-badge">02</div>
+              <h3>Smart Debugging</h3>
+              <p>Understand the root cause behind errors, not just the fix. Great for labs, mini projects, and painful stack traces.</p>
+            </article>
+            <article class="feature reveal">
+              <div class="icon-badge">03</div>
+              <h3>Project Planner</h3>
+              <p>Turn rough ideas into milestone-based execution with better task breakdowns, starter logic, and a cleaner finish path.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="about" class="about-grid reveal">
+          <div class="about-copy">
+            <div class="section-head" style="margin-bottom: 12px">
               <div>
-                <div class="welcome-logo"></div>
-                <h2 class="welcome-title">Welcome to StudentGPT</h2>
-                <p class="welcome-subtitle">
-                  Ask anything about projects, debugging, assignments, explanations, or fresh ideas. This workspace is designed to feel calmer, sharper, and more premium while keeping your same backend and chat logic.
+                <h2>About StudentGPT</h2>
+                <p>
+                  StudentGPT was built to make learning feel lighter without making the work shallow.
+                  It balances speed, clarity, and practical help so students can move from confusion to execution faster.
                 </p>
               </div>
-
-              <div class="welcome-grid">
-                <div class="welcome-chip">
-                  <strong>Code Help</strong>
-                  <span>Debug faster and understand what broke.</span>
-                </div>
-                <div class="welcome-chip">
-                  <strong>Study Support</strong>
-                  <span>Summaries, explanations, and revision-friendly answers.</span>
-                </div>
-                <div class="welcome-chip">
-                  <strong>Project Flow</strong>
-                  <span>Turn rough ideas into actual implementation steps.</span>
-                </div>
-              </div>
             </div>
-
-            <div class="welcome-side">
-              <div class="preview-card">
-                <h3 class="section-title">Suggested prompts</h3>
-                <p>Explain this Java code line by line in simple words.</p>
-              </div>
-              <div class="preview-card">
-                <h3 class="section-title">Assignment mode</h3>
-                <p>Turn my OS unit into short answers, long answers, and viva questions.</p>
-              </div>
-              <div class="preview-card">
-                <h3 class="section-title">Project help</h3>
-                <p>Break my app idea into frontend, backend, auth, database, and deployment steps.</p>
-              </div>
+            <p>
+              Whether you are writing assignments, fixing broken code, preparing for viva questions,
+              or trying to structure a final-year project, the goal is simple: give you something useful,
+              understandable, and immediately actionable.
+            </p>
+          </div>
+          <div class="about-list">
+            <ul>
+              <li><strong>Focused on Students:</strong> Coursework, coding, projects, viva prep, and revision support in one flow.</li>
+              <li><strong>Time Saver:</strong> Direct, compact answers when you are short on time and overloaded.</li>
+              <li><strong>Learn While You Do:</strong> Explanations stay readable instead of sounding like textbook filler.</li>
+              <li><strong>Practical Help:</strong> Useful for writing, debugging, planning, and turning ideas into next steps.</li>
+              <li><strong>Always Available:</strong> Works when classes end and deadlines suddenly become real.</li>
+            </ul>
+          </div>
+        </section>
+        <section id="why" class="reveal">
+          <div class="section-head">
+            <div>
+              <h2>Why it feels different</h2>
+              <p>
+                The experience is designed to look premium, but the real value is underneath: clear output,
+                faster iteration, and less friction when you are trying to finish something important.
+              </p>
             </div>
           </div>
-        </div>
+          <div class="why-grid">
+            <article class="panel reveal">
+              <div class="panel-top"><span class="panel-tag">Output</span><span class="score">Speed First</span></div>
+              <h3>Boost Productivity</h3>
+              <p>Finish assignments, labs, and concept work faster while still understanding what you are submitting.</p>
+            </article>
+            <article class="panel reveal">
+              <div class="panel-top"><span class="panel-tag">Clarity</span><span class="score">Readable</span></div>
+              <h3>Reliable & Accurate</h3>
+              <p>Responses are shaped around academic use cases, so they stay cleaner, sharper, and easier to revise from.</p>
+            </article>
+            <article class="panel reveal">
+              <div class="panel-top"><span class="panel-tag">Trust</span><span class="score">Student Fit</span></div>
+              <h3>Built for Real Pressure</h3>
+              <p>Especially useful when time is short, requirements are vague, and you still need to produce quality work.</p>
+            </article>
+          </div>
+        </section>
 
-        <div class="chat-input-area">
-          <form class="chat-input-form" id="chatForm" autocomplete="off">
-            <input type="text" id="userInput" placeholder="Ask StudentGPT anything..." required />
-            <button class="send-button" type="submit" aria-label="Send message">Send</button>
-          </form>
-        </div>
-      </section>
+        <section id="testimonials" class="reveal">
+          <div class="section-head">
+            <div>
+              <h2>What students love</h2>
+              <p>
+                It is most useful when the pressure is real: assignment deadlines, debugging sessions,
+                and the moment you need structure more than motivation.
+              </p>
+            </div>
+          </div>
+          <div class="testimonial-grid">
+            <article class="quote reveal">
+              <div class="quote-mark">“</div>
+              <h3>Assignments stopped feeling messy</h3>
+              <p>StudentGPT made my coding tasks easier because it did not just give output. It helped me understand the reason behind each fix.</p>
+              <strong>- Rahul, Computer Science Student</strong>
+            </article>
+            <article class="quote reveal">
+              <div class="quote-mark">“</div>
+              <h3>Exam prep got way faster</h3>
+              <p>I used it for summaries, short answers, and revision before exams. It genuinely saved hours and kept everything readable.</p>
+              <strong>- Priya, BBA Student</strong>
+            </article>
+            <article class="quote reveal">
+              <div class="quote-mark">“</div>
+              <h3>Project planning felt less chaotic</h3>
+              <p>It helped me break features into steps and build momentum. It feels like a calm technical buddy when the work piles up.</p>
+              <strong>- Aman, Engineering Student</strong>
+            </article>
+          </div>
+        </section>
+
+        <section id="contact" class="contact-grid reveal">
+          <div class="contact-card">
+            <span class="eyebrow">Need help or want to share feedback?</span>
+            <h2 style="margin-top: 18px">Reach the StudentGPT team directly</h2>
+            <p>
+              The backend and delivery flow stay exactly the same here. Only the visual layer is upgraded,
+              while your contact form still submits to the same endpoint.
+            </p>
+            <div class="contact-stats">
+              <div class="contact-stat"><strong>Fast response feel</strong><p>Designed to feel like a modern product page, not a static college project.</p></div>
+              <div class="contact-stat"><strong>Same backend</strong><p>No route changes. Your existing contact API and server integration remain untouched.</p></div>
+              <div class="contact-stat"><strong>Ready for deployment</strong><p>Responsive layout, smooth reveals, and cleaner section hierarchy for desktop and mobile.</p></div>
+            </div>
+          </div>
+
+          <div class="contact-form hero-copy" style="padding: 26px">
+            <h3>Send a message</h3>
+            <p class="lead" style="font-size: 0.98rem; max-width: none; margin-top: 10px">
+              Drop your name, email, and message. It will be delivered through the same backend flow already wired in your project.
+            </p>
+            <form id="contactForm" class="form-grid" style="margin-top: 22px">
+              <div>
+                <label class="field-label" for="contact-name">Your name</label>
+                <input id="contact-name" name="name" type="text" placeholder="Enter your name" required />
+              </div>
+              <div>
+                <label class="field-label" for="contact-email">Your email</label>
+                <input id="contact-email" name="email" type="email" placeholder="Enter your email" required />
+              </div>
+              <div>
+                <label class="field-label" for="contact-message">Message</label>
+                <textarea id="contact-message" name="message" rows="6" placeholder="Tell us what you want to build, fix, or improve" required></textarea>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Send Message</button>
+                <div id="contactStatus">Waiting for your message.</div>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <footer>
+          <div>© StudentGPT · Developed by <strong>Sagar Kamboj</strong></div>
+          <div class="footer-links">
+            <a href="terms.html">Terms</a>
+            <a href="privacy.html">Privacy</a>
+          </div>
+        </footer>
+      </div>
     </div>
+    <script>
+      const modeBtn = document.getElementById("mode-btn");
+      const body = document.body;
 
-    <script src="chatbot.js"></script>
+      modeBtn.addEventListener("click", () => {
+        body.classList.toggle("light-mode");
+        modeBtn.textContent = body.classList.contains("light-mode") ? "Sun" : "Moon";
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const API_BASE =
+          ["localhost", "127.0.0.1", ""].includes(window.location.hostname) ||
+          window.location.protocol === "file:"
+            ? "http://localhost:4000"
+            : "https://student-gpt.onrender.com";
+
+        const revealElements = document.querySelectorAll(".reveal");
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.16 }
+        );
+
+        revealElements.forEach((element) => observer.observe(element));
+
+        const form = document.getElementById("contactForm");
+        if (!form) return;
+        const status = document.getElementById("contactStatus");
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          status.textContent = "Sending...";
+          const payload = {
+            name: document.getElementById("contact-name").value.trim(),
+            email: document.getElementById("contact-email").value.trim(),
+            message: document.getElementById("contact-message").value.trim(),
+          };
+
+          try {
+            const res = await fetch(`${API_BASE}/api/contact`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+            const json = await res.json();
+            if (res.ok && json.ok) {
+              status.textContent = "Message sent - thank you.";
+              form.reset();
+            } else {
+              status.textContent = "Send failed. Try again later.";
+              console.error(json);
+            }
+          } catch (err) {
+            status.textContent = "Send failed. Check network.";
+            console.error(err);
+          }
+
+          setTimeout(() => {
+            status.textContent = "Waiting for your message.";
+          }, 5000);
+        });
+      });
+    </script>
   </body>
 </html>

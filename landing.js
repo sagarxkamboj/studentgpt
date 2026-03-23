@@ -1,17 +1,17 @@
-
+﻿
 document.addEventListener("DOMContentLoaded", () => {
   const navMenu = document.querySelector(".nav-menu");
   const hamburger = document.querySelector(".hamburger");
   const startChatBtn = document.getElementById("startChatBtn");
   const navActions = document.querySelector(".nav-actions");
 
-  // 🔹 Toggle mobile menu
+  // ðŸ”¹ Toggle mobile menu
   hamburger.addEventListener("click", () => {
     hamburger.classList.toggle("active");
     navMenu.classList.toggle("active");
   });
 
-  // 🔹 Close menu when clicking a nav link
+  // ðŸ”¹ Close menu when clicking a nav link
   document.querySelectorAll(".nav-link").forEach((link) => {
     link.addEventListener("click", (e) => {
       const section = e.target.getAttribute("href").substring(1);
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 🔹 Close menu if clicking outside it
+  // ðŸ”¹ Close menu if clicking outside it
   document.addEventListener("click", (e) => {
     if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
       navMenu.classList.remove("active");
@@ -35,10 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 🔹 Show correct nav actions based on login status
+  // ðŸ”¹ Show correct nav actions based on login status
   if (localStorage.getItem("token")) {
     navActions.innerHTML = `
-      <a href="chatbot.html" class="nav-signin">Chatbot</a>
+      <a href="chat.html" class="nav-signin">Chatbot</a>
       <a href="#" id="logoutBtn" class="nav-signin">Logout</a>
     `;
 
@@ -56,11 +56,11 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   }
 
-  // 🔹 Start Chatbot Button Logic
+  // ðŸ”¹ Start Chatbot Button Logic
   startChatBtn.addEventListener("click", (e) => {
     e.preventDefault();
     if (localStorage.getItem("token")) {
-      window.location.href = "index.html";
+      window.location.href = "chat.html";
     } else {
       window.location.href = "Login.html";
     }
@@ -98,3 +98,4 @@ document.addEventListener("DOMContentLoaded", () => {
   const homeLink = document.querySelector('.nav-link[data-section="home"]');
   if (homeLink) homeLink.classList.add("active");
 });
+

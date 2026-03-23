@@ -89,7 +89,7 @@
 
       // show success feedback then redirect
       alert("Login successful");
-      window.location.href = "index.html";
+      window.location.href = "chat.html";
     } catch (err) {
       console.error("Login error:", err);
       alert("Login failed: " + (err.message || "Check console for details."));
@@ -98,4 +98,5 @@
     }
   });
 });
+
 
