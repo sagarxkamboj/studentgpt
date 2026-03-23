@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudentGPT | Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #07111f;
+        --bg-soft: #0d1b31;
+        --panel: rgba(12, 20, 36, 0.82);
+        --line: rgba(165, 198, 255, 0.14);
+        --text: #edf4ff;
+        --muted: #9dafc7;
+        --accent: #74f2ce;
+        --accent-2: #66a6ff;
+        --shadow: 0 30px 90px rgba(0, 0, 0, 0.38);
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        min-height: 100vh;
+        font-family: "Manrope", system-ui, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 10% 10%, rgba(102, 166, 255, 0.18), transparent 24%),
+          radial-gradient(circle at 88% 12%, rgba(116, 242, 206, 0.14), transparent 22%),
+          linear-gradient(180deg, var(--bg), var(--bg-soft));
+        padding: 18px;
+      }
+      .page {
+        width: min(980px, 100%);
+        margin: 0 auto;
+        display: grid;
+        gap: 18px;
+      }
+      .topbar,
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(18px);
+      }
+      .topbar {
+        padding: 18px 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      h1, h2 { font-family: "Space Grotesk", sans-serif; letter-spacing: -0.04em; }
+      h1 { font-size: 1.7rem; }
+      .topbar p, .subtext, #status { color: var(--muted); }
+      .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+      .btn {
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.05);
+        color: var(--text);
+        padding: 11px 16px;
+        border-radius: 999px;
+        text-decoration: none;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        color: #07111f;
+        border-color: transparent;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+      .card { padding: 22px; }
+      .card h2 { margin-bottom: 8px; }
+      .card p { color: var(--muted); margin-bottom: 18px; }
+      .form-grid { display: grid; gap: 14px; }
+      label { display: grid; gap: 8px; font-weight: 700; }
+      input {
+        width: 100%;
+        padding: 14px 16px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.05);
+        color: var(--text);
+        outline: none;
+      }
+      input[readonly] { opacity: 0.75; cursor: not-allowed; }
+      .hint { font-size: 0.9rem; color: var(--muted); }
+      .avatar-wrap { display: grid; gap: 12px; }
+      .avatar-preview { width: 90px; height: 90px; border-radius: 24px; object-fit: cover; border: 1px solid var(--line); background: rgba(255,255,255,0.05); }
+      #status { padding-left: 4px; }
+      @media (max-width: 760px) {
+        body { padding: 12px; }
+        .grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="topbar">
+        <div>
+          <h1>Your Profile</h1>
+          <p>Update basic account details and change your password safely.</p>
+        </div>
+        <div class="actions">
+          <a class="btn" href="chat.html">Back to Chat</a>
+          <button id="logoutBtn" class="btn" type="button">Logout</button>
+        </div>
+      </section>
+
+      <div id="status">Loading profile...</div>
+
+      <section class="grid">
+        <article class="card">
+          <h2>Account details</h2>
+          <p>Edit your visible profile information here.</p>
+          <form id="profileForm" class="form-grid">
+            <div class="avatar-wrap">
+              <label>
+                Profile image
+                <img id="avatarPreview" class="avatar-preview" src="Actual.png" alt="Profile preview" />
+              </label>
+              <label>
+                Upload image
+                <input id="profileAvatar" type="file" accept="image/*" />
+              </label>
+              <div class="hint">Use a square image under 1 MB for the cleanest result.</div>
+            </div>
+            <label>
+              Full name
+              <input id="profileName" type="text" required />
+            </label>
+            <label>
+              Email address
+              <input id="profileEmail" type="email" readonly />
+            </label>
+            <label>
+              Phone number
+              <input id="profilePhone" type="text" placeholder="Optional" />
+            </label>
+            <button class="btn btn-primary" type="submit">Save Profile</button>
+          </form>
+        </article>
+
+        <article class="card">
+          <h2>Change password</h2>
+          <p>Leave this section blank if you only want to update your profile details.</p>
+          <form id="passwordForm" class="form-grid">
+            <label>
+              Current password
+              <input id="currentPassword" type="password" />
+            </label>
+            <label>
+              New password
+              <input id="newPassword" type="password" />
+            </label>
+            <div class="hint">Use at least 8 characters with uppercase, lowercase, number, and special character.</div>
+            <button class="btn btn-primary" type="submit">Update Password</button>
+          </form>
+        </article>
+      </section>
+    </main>
+
+    <script src="profile.js"></script>
+  </body>
+</html>
+
+

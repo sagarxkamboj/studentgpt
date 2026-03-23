@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -288,65 +288,135 @@
       }
 
       .chat-header {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 14px;
-        padding: 16px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 12px;
         border-bottom: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.03);
+        background: rgba(255, 255, 255, 0.02);
       }
 
       .header-copy {
-        min-width: 0;
+        display: none;
       }
 
       .header-title {
-        font-size: 1.48rem;
-        margin-bottom: 4px;
+        font-size: 0.95rem;
+        margin-bottom: 2px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
       }
 
       .header-subtitle {
-        font-size: 0.93rem;
+        font-size: 0.78rem;
+        max-width: 38ch;
+        line-height: 1.4;
       }
 
       .user-panel {
         display: flex;
-        gap: 12px;
-        align-items: flex-start;
-        padding: 12px 14px;
-        border-radius: 24px;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 10px;
+        border-radius: 16px;
         background: var(--panel-soft);
         border: 1px solid var(--line);
+        width: 100%;
+        max-width: 760px;
+        margin-left: auto;
       }
 
       .user-badge {
-        width: 48px;
-        height: 48px;
-        border-radius: 16px;
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
         display: grid;
         place-items: center;
+        overflow: hidden;
+        flex: 0 0 auto;
         background: linear-gradient(135deg, rgba(116, 242, 206, 0.16), rgba(102, 166, 255, 0.18));
         font-weight: 800;
       }
 
+      .user-badge img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .user-info {
+        min-width: 0;
+        flex: 1 1 auto;
+        display: grid;
+        grid-template-columns: minmax(120px, 170px) minmax(130px, 170px) minmax(120px, 170px) auto;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .identity-block {
+        min-width: 0;
+      }
+
       .user-info strong {
         display: block;
-        font-size: 0.96rem;
+        font-size: 0.88rem;
         font-weight: 700;
+        line-height: 1.15;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .user-info small {
         color: var(--muted);
         display: block;
         margin-top: 2px;
+        font-size: 0.76rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .provider-switch {
+        margin-top: 0;
+        display: grid;
+        gap: 4px;
+      }
+
+      .provider-switch label {
+        font-size: 0.58rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .provider-select {
+        width: 100%;
+        min-width: 116px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        padding: 7px 9px;
+        outline: none;
+        font-size: 0.82rem;
+      }
+
+      .action-row {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
       }
 
       .logout-btn {
-        margin-top: 8px;
+        margin-top: 0;
         border: none;
         border-radius: 999px;
-        padding: 8px 12px;
-        font-size: 0.82rem;
+        padding: 6px 10px;
+        font-size: 0.72rem;
         font-weight: 700;
         color: var(--text);
         background: rgba(255, 255, 255, 0.08);
@@ -467,6 +537,87 @@
         border: 1px solid rgba(255, 255, 255, 0.04);
       }
 
+      .message-content p,
+      .message-content ul,
+      .message-content ol,
+      .message-content pre,
+      .message-content h3,
+      .message-content h4,
+      .message-content h5 {
+        margin: 0 0 12px;
+      }
+
+      .message-content p:last-child,
+      .message-content ul:last-child,
+      .message-content ol:last-child,
+      .message-content pre:last-child,
+      .message-content h3:last-child,
+      .message-content h4:last-child,
+      .message-content h5:last-child {
+        margin-bottom: 0;
+      }
+
+      .message-content ul,
+      .message-content ol {
+        padding-left: 20px;
+      }
+
+      .message-content li + li {
+        margin-top: 6px;
+      }
+
+      .message-content code {
+        font-family: "Consolas", "Courier New", monospace;
+        font-size: 0.92em;
+        padding: 2px 6px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .message-content .code-block {
+        overflow-x: auto;
+        padding: 14px;
+        border-radius: 18px;
+        background: rgba(6, 12, 24, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .message-content .code-block code {
+        display: block;
+        padding: 0;
+        background: transparent;
+        white-space: pre-wrap;
+        line-height: 1.65;
+      }
+
+      .message-content .code-label {
+        margin-bottom: 10px;
+        font-size: 0.78rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+      }
+
+      .message-content .code-toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .message-content .copy-code-btn {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-size: 0.76rem;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
       .bot-message {
         align-self: flex-start;
       }
@@ -488,17 +639,60 @@
         border: none;
       }
 
+      .message-footer {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 7px;
+        flex-wrap: wrap;
+      }
+
       .message-time {
         font-size: 0.72rem;
         color: var(--muted);
-        margin-top: 7px;
       }
 
-      .bot-message .message-time {
+      .provider-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 9px;
+        border-radius: 999px;
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--muted);
+      }
+
+      .provider-badge::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: currentColor;
+        opacity: 0.85;
+      }
+
+      .provider-badge.gemini {
+        color: #74f2ce;
+      }
+
+      .provider-badge.qwen {
+        color: #7bb0ff;
+      }
+
+      .provider-badge.deepseek {
+        color: #ff9a62;
+      }
+
+      .bot-message .message-footer {
         align-self: flex-start;
       }
 
-      .user-message .message-time {
+      .user-message .message-footer {
         align-self: flex-end;
       }
 
@@ -587,58 +781,142 @@
         }
 
         .chat-header {
-          padding: 14px 16px;
-        }
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.02);
+      }
 
-        .header-title {
-          font-size: 1.3rem;
-        }
+      .header-copy {
+        display: none;
+      }
 
-        .header-subtitle {
-          font-size: 0.88rem;
-        }
+      .header-title {
+        font-size: 0.95rem;
+        margin-bottom: 2px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
 
-        .welcome-container {
-          gap: 10px;
-        }
+      .header-subtitle {
+        font-size: 0.78rem;
+        max-width: 38ch;
+        line-height: 1.4;
+      }
 
-        .welcome-hero,
-        .welcome-side {
-          padding: 14px;
-          border-radius: 20px;
-        }
+      .user-panel {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 10px;
+        border-radius: 16px;
+        background: var(--panel-soft);
+        border: 1px solid var(--line);
+        width: 100%;
+        max-width: 760px;
+        margin-left: auto;
+      }
 
-        .welcome-logo {
-          width: 58px;
-          height: 58px;
-          margin-bottom: 10px;
-        }
+      .user-badge {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        flex: 0 0 auto;
+        background: linear-gradient(135deg, rgba(116, 242, 206, 0.16), rgba(102, 166, 255, 0.18));
+        font-weight: 800;
+      }
 
-        .welcome-title {
-          font-size: clamp(1.35rem, 2vw, 1.9rem);
-          margin-bottom: 8px;
-        }
+      .user-badge img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
 
-        .welcome-subtitle {
-          line-height: 1.55;
-          font-size: 0.92rem;
-        }
+      .user-info {
+        min-width: 0;
+        flex: 1 1 auto;
+        display: grid;
+        grid-template-columns: minmax(120px, 170px) minmax(130px, 170px) minmax(120px, 170px) auto;
+        gap: 8px;
+        align-items: center;
+      }
 
-        .welcome-grid {
-          grid-template-columns: 1fr;
-          margin-top: 14px;
-        }
+      .identity-block {
+        min-width: 0;
+      }
 
-        .welcome-chip,
-        .preview-card {
-          padding: 10px 12px;
-        }
+      .user-info strong {
+        display: block;
+        font-size: 0.88rem;
+        font-weight: 700;
+        line-height: 1.15;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
-        .preview-card:last-child {
-          display: none;
-        }
+      .user-info small {
+        color: var(--muted);
+        display: block;
+        margin-top: 2px;
+        font-size: 0.76rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
-        .chat-messages {
+      .provider-switch {
+        margin-top: 0;
+        display: grid;
+        gap: 4px;
+      }
+
+      .provider-switch label {
+        font-size: 0.58rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .provider-select {
+        width: 100%;
+        min-width: 116px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        padding: 7px 9px;
+        outline: none;
+        font-size: 0.82rem;
+      }
+
+      .action-row {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .logout-btn {
+        margin-top: 0;
+        border: none;
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.08);
+        cursor: pointer;
+      }
+
+      .chat-messages {
           padding: 12px 14px;
         }
 
@@ -757,18 +1035,30 @@
       <section class="chat-container">
         <header class="chat-header">
           <div class="header-copy">
-            <h2 class="header-title">AI Conversation</h2>
-            <p class="header-subtitle">
-              Ask for code help, assignment breakdowns, viva prep, explanations, or project guidance. The underlying chatbot flow is unchanged.
-            </p>
+            <h2 class="header-title">Chat Workspace</h2>
+            <p class="header-subtitle">Focused answers for code, assignments, viva, and project help.</p>
           </div>
 
           <div class="user-panel">
-            <div class="user-badge">AI</div>
+            <div class="user-badge"><span id="userBadgeText">AI</span><img id="userAvatar" src="Actual.png" alt="Profile avatar" hidden /></div>
             <div class="user-info">
               <strong id="userName"></strong>
               <small id="userEmail"></small>
-              <button id="logoutBtn" class="logout-btn" type="button">Logout</button>
+              <div class="provider-switch">
+                <label for="providerSelect">Model Provider</label>
+                <select id="providerSelect" class="provider-select">
+                  <option value="gemini">Gemini</option>
+                  <option value="qwen">Qwen</option>
+                  <option value="deepseek">DeepSeek</option>
+                </select>
+              </div>
+              <div class="action-row">
+                <button id="profileLink" class="logout-btn" type="button">Profile</button>
+                <button id="exportChatBtn" class="logout-btn" type="button">Export PDF</button>
+                <button id="clearHistoryBtn" class="logout-btn" type="button">Clear History</button>
+                <button id="adminLink" class="logout-btn" type="button" hidden>Admin Dashboard</button>
+                <button id="logoutBtn" class="logout-btn" type="button">Logout</button>
+              </div>
             </div>
           </div>
         </header>
@@ -829,3 +1119,30 @@
     <script src="chatbot.js"></script>
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

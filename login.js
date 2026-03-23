@@ -74,6 +74,8 @@
       const name =
         data.name || data.username || (data.user && data.user.name) || "";
       const userEmail = data.email || (data.user && data.user.email) || email;
+      const avatar = data.avatar || (data.user && data.user.avatar) || "";
+      const isAdmin = Boolean(data.isAdmin || (data.user && data.user.isAdmin));
 
       if (!token) throw new Error("No token returned from server.");
 
@@ -82,9 +84,10 @@
       localStorage.setItem("token", token);
       localStorage.setItem("userName", displayName);
       localStorage.setItem("userEmail", userEmail);
+      localStorage.setItem("isAdmin", String(isAdmin));
       localStorage.setItem(
         "user",
-        JSON.stringify({ name: displayName, email: userEmail })
+        JSON.stringify({ name: displayName, email: userEmail, avatar, isAdmin })
       );
 
       // show success feedback then redirect
@@ -98,6 +101,9 @@
     }
   });
 });
+
+
+
 
 
 

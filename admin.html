@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudentGPT | Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #07111f;
+        --bg-soft: #0d1b31;
+        --panel: rgba(12, 20, 36, 0.82);
+        --panel-soft: rgba(255, 255, 255, 0.04);
+        --line: rgba(165, 198, 255, 0.14);
+        --text: #edf4ff;
+        --muted: #9dafc7;
+        --accent: #74f2ce;
+        --accent-2: #66a6ff;
+        --shadow: 0 30px 90px rgba(0, 0, 0, 0.38);
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        min-height: 100vh;
+        font-family: "Manrope", system-ui, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 10% 10%, rgba(102, 166, 255, 0.18), transparent 24%),
+          radial-gradient(circle at 88% 12%, rgba(116, 242, 206, 0.14), transparent 22%),
+          linear-gradient(180deg, var(--bg), var(--bg-soft));
+        padding: 18px;
+      }
+      .dashboard {
+        width: min(1280px, 100%);
+        margin: 0 auto;
+        display: grid;
+        gap: 18px;
+      }
+      .topbar,
+      .card,
+      .panel,
+      .metric {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(18px);
+      }
+      .topbar {
+        padding: 18px 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .brand h1,
+      .panel h2,
+      .metric strong {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.04em;
+      }
+      .brand h1 { font-size: 1.6rem; }
+      .brand p { color: var(--muted); margin-top: 6px; }
+      .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+      .btn {
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.05);
+        color: var(--text);
+        padding: 11px 16px;
+        border-radius: 999px;
+        text-decoration: none;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        color: #07111f;
+        border-color: transparent;
+      }
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .metric {
+        padding: 18px;
+      }
+      .metric span { color: var(--muted); display: block; margin-bottom: 8px; }
+      .metric strong { font-size: 2rem; display: block; margin-bottom: 6px; }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .panel {
+        padding: 18px;
+        min-height: 320px;
+      }
+      .panel-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .panel-head h2 { font-size: 1.2rem; }
+      .panel-head span { color: var(--muted); font-size: 0.9rem; }
+      .list {
+        display: grid;
+        gap: 10px;
+      }
+      .item {
+        padding: 14px;
+        border-radius: 18px;
+        background: var(--panel-soft);
+        border: 1px solid rgba(255,255,255,0.06);
+      }
+      .item strong { display: block; margin-bottom: 4px; }
+      .item small,
+      .item p { color: var(--muted); line-height: 1.55; }
+      .empty {
+        color: var(--muted);
+        padding: 18px 0;
+      }
+      #status {
+        color: var(--muted);
+        padding-left: 4px;
+      }
+      @media (max-width: 980px) {
+        .metrics,
+        .grid { grid-template-columns: 1fr 1fr; }
+      }
+      @media (max-width: 720px) {
+        body { padding: 12px; }
+        .metrics,
+        .grid { grid-template-columns: 1fr; }
+        .topbar { padding: 16px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="dashboard">
+      <section class="topbar">
+        <div class="brand">
+          <h1>StudentGPT Admin Dashboard</h1>
+          <p>Track users, stored chat history, and contact submissions from one place.</p>
+        </div>
+        <div class="actions">
+          <a class="btn" href="chat.html">Back to Chat</a>
+          <button id="refreshBtn" class="btn btn-primary" type="button">Refresh Data</button>
+        </div>
+      </section>
+
+      <div id="status">Loading dashboard...</div>
+
+      <section class="metrics">
+        <article class="metric">
+          <span>Total users</span>
+          <strong id="totalUsers">-</strong>
+          <p>Registered accounts on the platform</p>
+        </article>
+        <article class="metric">
+          <span>Admins</span>
+          <strong id="totalAdmins">-</strong>
+          <p>Users with dashboard access</p>
+        </article>
+        <article class="metric">
+          <span>Saved chats</span>
+          <strong id="totalChats">-</strong>
+          <p>MongoDB-backed chat history entries</p>
+        </article>
+        <article class="metric">
+          <span>Total messages</span>
+          <strong id="totalMessages">-</strong>
+          <p>User and assistant messages stored</p>
+        </article>
+      </section>
+
+      <section class="grid">
+        <article class="panel">
+          <div class="panel-head">
+            <h2>Recent users</h2>
+            <span>Latest signups</span>
+          </div>
+          <div id="recentUsers" class="list"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-head">
+            <h2>Recent chats</h2>
+            <span>Latest stored conversations</span>
+          </div>
+          <div id="recentChats" class="list"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-head">
+            <h2>Contact messages</h2>
+            <span>Latest contact submissions</span>
+          </div>
+          <div id="recentContacts" class="list"></div>
+        </article>
+      </section>
+    </main>
+
+    <script src="admin.js"></script>
+  </body>
+</html>
