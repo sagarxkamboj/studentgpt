@@ -8,9 +8,31 @@ const nodemailer = require("nodemailer");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const app = express();
+const allowedOrigins = new Set([
+  "http://localhost:4000",
+  "http://localhost:5500",
+  "http://127.0.0.1:5500",
+  "http://127.0.0.1:5501",
+  "http://localhost:5501",
+  "https://student-gpt.onrender.com",
+]);
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.has(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error(`CORS blocked for origin: ${origin}`));
+    },
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: false,
+  })
+);
+app.options("*", cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
 
 // Gemini AI client
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -538,5 +560,6 @@ mongoose
   .catch((err) => {
     console.error("DB connection error:", err);
   });
+
 
 
