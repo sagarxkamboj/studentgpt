@@ -15,7 +15,7 @@
     ["localhost", "127.0.0.1", ""].includes(window.location.hostname) ||
     window.location.protocol === "file:"
       ? "http://localhost:4000"
-      : "https://student-gpt.onrender.com";
+      : "https://studentgpt-4zbc.onrender.com";
   const API_URL = `${API_BASE}/login`;
 
   // Apply saved theme on load
@@ -98,5 +98,6 @@
     }
   });
 });
+
 
 

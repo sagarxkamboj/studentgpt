@@ -4,7 +4,7 @@
     const API_BASE =
       window.location.hostname === "localhost"
         ? "http://localhost:4000"
-        : "https://student-gpt.onrender.com";
+        : "https://studentgpt-4zbc.onrender.com";
     e.preventDefault();
 
     const name = document.getElementById("signup-name").value.trim();
@@ -46,4 +46,5 @@
       alert("Error creating account. Please try again later.");
     }
   });
+
 

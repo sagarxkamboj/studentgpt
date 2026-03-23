@@ -3,7 +3,7 @@
     ["localhost", "127.0.0.1", ""].includes(window.location.hostname) ||
     window.location.protocol === "file:"
       ? "http://localhost:4000"
-      : "https://student-gpt.onrender.com";
+      : "https://studentgpt-4zbc.onrender.com";
   const email = document.getElementById("email").value;
   if (!email) return setMsg("Enter your registered email.");
   setMsg("Sending OTP...");
@@ -25,7 +25,7 @@ document.getElementById("reset-form").onsubmit = async function (e) {
     ["localhost", "127.0.0.1", ""].includes(window.location.hostname) ||
     window.location.protocol === "file:"
       ? "http://localhost:4000"
-      : "https://student-gpt.onrender.com";
+      : "https://studentgpt-4zbc.onrender.com";
   e.preventDefault();
   const email = document.getElementById("email").value;
   const otp = document.getElementById("otp").value.trim();
@@ -48,4 +48,5 @@ document.getElementById("reset-form").onsubmit = async function (e) {
 function setMsg(msg) {
   document.getElementById("msg").innerText = msg;
 }
+
 
