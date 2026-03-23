@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Privacy Policy — StudentGPT</title>
+    <meta name="description" content="Privacy policy for StudentGPT" />
+    <style>
+      :root {
+        --bg-1: #0f0f14;
+        --bg-2: #14121a;
+        --card: rgba(255, 255, 255, 0.03);
+        --muted: #9aa0b4;
+        --text: #e8e8ee;
+        --accent: #8a63d2;
+        --accent-2: #7b58bb;
+        --glass: rgba(255, 255, 255, 0.04);
+      }
+      body.light-mode {
+        --bg-1: #fff8fb;
+        --bg-2: #fff;
+        --card: rgba(0, 0, 0, 0.04);
+        --muted: #4b5563;
+        --text: #111;
+        --accent: #7b4fd2;
+        --accent-2: #b45cff;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+        color: var(--text);
+        background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+        padding: 28px;
+      }
+      .wrap {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.01),
+          transparent
+        );
+        border: 1px solid var(--card);
+        border-radius: 14px;
+        padding: 26px;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: var(--text);
+      }
+      .logo {
+        width: 56px;
+        height: 56px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        border: 3px solid rgba(255, 255, 255, 0.06);
+      }
+      .logo img {
+        width: 36px;
+        height: 36px;
+      }
+      .brand h1 {
+        font-size: 16px;
+        margin: 0;
+      }
+      nav {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .nav-link {
+        color: var(--muted);
+        text-decoration: none;
+        padding: 8px 10px;
+        border-radius: 8px;
+      }
+      .nav-link:hover {
+        background: var(--glass);
+        color: var(--text);
+      }
+      h2 {
+        margin: 6px 0 12px 0;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 14px;
+        margin-bottom: 18px;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.01);
+        border: 1px solid var(--card);
+        padding: 18px;
+        border-radius: 10px;
+        margin-bottom: 14px;
+      }
+      p {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      ul {
+        color: var(--muted);
+        line-height: 1.6;
+        margin-left: 18px;
+      }
+      footer {
+        margin-top: 18px;
+        color: var(--muted);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .small {
+        font-size: 13px;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <a class="brand" href="index.html" aria-label="StudentGPT home">
+          <span class="logo"><img src="Actual.png" alt="logo" /></span>
+          <div>
+            <h1>StudentGPT</h1>
+            <div class="small">Privacy Policy</div>
+          </div>
+        </a>
+        <nav>
+          <a class="nav-link" href="Login.html">Sign in</a>
+          <a class="nav-link" href="signup.html">Sign up</a>
+          <button
+            id="mode-btn"
+            class="nav-link"
+            title="Toggle theme"
+            aria-pressed="false"
+          >
+            Theme
+          </button>
+        </nav>
+      </header>
+
+      <section class="card" aria-labelledby="privacy-title">
+        <h2 id="privacy-title">Privacy Policy</h2>
+        <div class="meta">Last updated: <strong>2025-09-03</strong></div>
+
+        <div class="card">
+          <h3>1. Information we collect</h3>
+          <p>
+            We collect information you provide (name, email, phone) and usage
+            data (logs, queries, timestamps). We do not sell personal data to
+            third parties.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>2. How we use data</h3>
+          <p>
+            We use data to provide and improve the service, send transactional
+            emails (verification, welcome), and for analytics to improve model
+            responses.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>3. Data retention & deletion</h3>
+          <p>
+            Accounts and associated data are retained until deletion. Users can
+            request account deletion by contacting support. We will remove
+            personal data in accordance with applicable laws.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>4. Security</h3>
+          <p>
+            We use standard security practices (encryption at rest/transit where
+            applicable). However, no system is fully secure — use strong
+            passwords and enable additional protections if available.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>5. Contact & requests</h3>
+          <p>
+            For privacy requests (access, deletion), contact:
+            studentgpt00@gmail.com
+          </p>
+          <p>We will respond to verified requests as required by law.</p>
+        </div>
+      </section>
+
+      <footer>
+        <div class="small">
+          © <strong>StudentGPT</strong> · Developed by Sagar Kamboj
+        </div>
+        <div><a class="nav-link" href="terms.html">Terms & Conditions</a></div>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        const modeBtn = document.getElementById("mode-btn");
+        try {
+          const saved = localStorage.getItem("theme");
+          if (saved === "light") document.body.classList.add("light-mode");
+        } catch (e) {}
+        modeBtn.addEventListener("click", () => {
+          const isLight = document.body.classList.toggle("light-mode");
+          localStorage.setItem("theme", isLight ? "light" : "dark");
+          modeBtn.setAttribute("aria-pressed", isLight);
+        });
+      })();
+    </script>
+  </body>
+</html>

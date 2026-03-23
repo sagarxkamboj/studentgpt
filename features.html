@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Features — StudentGPT</title>
+    <meta name="description" content="Features of StudentGPT" />
+    <style>
+      :root {
+        --bg: #0b0c0e;
+        --panel: #0f1720;
+        --muted: #9aa0b4;
+        --text: #e8e8ee;
+        --accent: #7b58bb;
+        --accent-2: #a678ff;
+        --glass: rgba(255, 255, 255, 0.03);
+      }
+      body.light-mode {
+        --bg: #fff;
+        --panel: #fff;
+        --muted: #666;
+        --text: #111;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+        background: linear-gradient(180deg, var(--bg), #070809);
+        color: var(--text);
+        padding: 28px;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: var(--text);
+      }
+      .logo {
+        width: 52px;
+        height: 52px;
+        border-radius: 10px;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid rgba(255, 255, 255, 0.04);
+      }
+      .logo img {
+        width: 40px;
+        height: 40px;
+        display: block;
+      }
+      nav {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .nav-link {
+        color: var(--muted);
+        text-decoration: none;
+        padding: 8px 12px;
+        border-radius: 8px;
+      }
+      .nav-link:hover {
+        background: var(--glass);
+        color: var(--text);
+      }
+      .hero {
+        margin-top: 20px;
+        padding: 22px;
+        border-radius: 12px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.01),
+          transparent
+        );
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        display: flex;
+        gap: 18px;
+        align-items: center;
+      }
+      .hero-left {
+        flex: 1;
+      }
+      .kicker {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        color: #fff;
+        font-weight: 700;
+        font-size: 12px;
+      }
+      .title {
+        font-size: 22px;
+        margin-top: 12px;
+      }
+      .desc {
+        color: var(--muted);
+        margin-top: 8px;
+      }
+      .cta {
+        margin-top: 14px;
+        display: flex;
+        gap: 10px;
+      }
+      .btn {
+        padding: 10px 14px;
+        border-radius: 10px;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+      }
+      .btn-primary {
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        color: #fff;
+      }
+      .panel {
+        width: 240px;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        background: var(--panel);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 12px;
+      }
+      .panel img {
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+        display: block;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-top: 18px;
+      }
+      .card {
+        padding: 16px;
+        border-radius: 12px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.01),
+          transparent
+        );
+        border: 1px solid rgba(255, 255, 255, 0.03);
+      }
+      .card h3 {
+        margin-bottom: 8px;
+        font-size: 16px;
+      }
+      .muted {
+        color: var(--muted);
+        font-size: 14px;
+      }
+      footer {
+        margin-top: 24px;
+        color: var(--muted);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      @media (max-width: 980px) {
+        .grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .panel {
+          width: 200px;
+        }
+      }
+      @media (max-width: 680px) {
+        .hero {
+          flex-direction: column;
+        }
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .panel {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <a class="brand" href="index.html">
+          <span class="logo"><img src="Actual.png" alt="StudentGPT" /></span>
+          <div>
+            <strong>StudentGPT</strong>
+            <div style="font-size: 12px; color: var(--muted)">
+              AI for students
+            </div>
+          </div>
+        </a>
+
+        <nav>
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="usecases.html">Use cases</a>
+          <a class="nav-link" href="starter-prompts.html">Prompts</a>
+          <a class="nav-link" href="Login.html">Log in</a>
+          <a class="nav-link" href="signup.html">Sign up</a>
+          <button
+            id="mode-btn"
+            class="nav-link"
+            aria-pressed="false"
+            title="Toggle theme"
+          >
+            Theme
+          </button>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero" aria-label="Features hero">
+          <div class="hero-left">
+            <span class="kicker">Core features</span>
+            <h2 class="title">Tools that help you learn and ship faster</h2>
+            <p class="desc">
+              Readable code snippets, step-by-step debugging, project scaffolds
+              and study aids — focused on practical outputs and learning.
+            </p>
+            <div class="cta">
+              <a class="btn btn-primary" href="signup.html">Get started</a>
+              <a class="btn" href="index.html">Overview</a>
+            </div>
+          </div>
+
+          <aside class="panel" aria-hidden="true">
+            <img src="Actual.png" alt="Illustration" />
+            <div
+              style="
+                margin-top: 10px;
+                text-align: center;
+                font-size: 13px;
+                color: var(--muted);
+              "
+            >
+              Welcome kit — prompts & examples
+            </div>
+          </aside>
+        </section>
+
+        <section style="margin-top: 18px">
+          <div class="grid">
+            <div class="card">
+              <h3>Context-aware snippets</h3>
+              <p class="muted">
+                Provide your problem and get runnable code with comments,
+                suggested tests and alternatives for common languages (Python,
+                JS, Java).
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>Interactive debugging</h3>
+              <p class="muted">
+                Paste failing code and receive prioritized fixes, minimal
+                patches and a short root-cause explanation to learn from
+                mistakes.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>Project planner</h3>
+              <p class="muted">
+                Turn an idea into milestones, suggested tech stack and starter
+                code. Export tasks and deadlines for coursework or capstone
+                projects.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>Study aids</h3>
+              <p class="muted">
+                Summaries, flashcards and quizzes generated from your notes or
+                syllabus for quick revision and active recall.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>Secure accounts</h3>
+              <p class="muted">
+                Email verification, secure password hashing and optional 2FA
+                support. Welcome & transactional emails after signup.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>Integrations</h3>
+              <p class="muted">
+                Optional payment integration (Stripe), GitHub links for starter
+                repos and export options for tasks and notes.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <div>© <strong>StudentGPT</strong> · Developed by Sagar Kamboj</div>
+        <div style="display: flex; gap: 10px; align-items: center">
+          <a class="nav-link" href="terms.html">Terms</a>
+          <a class="nav-link" href="privacy.html">Privacy</a>
+          <a
+            class="nav-link"
+            href="https://github.com/sagarxkamboj"
+            target="_blank"
+            >GitHub</a
+          >
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        const modeBtn = document.getElementById("mode-btn");
+        try {
+          if (localStorage.getItem("theme") === "light")
+            document.body.classList.add("light-mode");
+        } catch (e) {}
+        modeBtn.addEventListener("click", () => {
+          const isLight = document.body.classList.toggle("light-mode");
+          localStorage.setItem("theme", isLight ? "light" : "dark");
+          modeBtn.setAttribute("aria-pressed", !!isLight);
+        });
+      })();
+    </script>
+  </body>
+</html>
