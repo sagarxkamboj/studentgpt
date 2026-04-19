@@ -1,254 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Terms & Conditions — StudentGPT</title>
-    <meta name="description" content="Terms and Conditions for StudentGPT" />
-    <style>
-      :root {
-        --bg-1: #0f0f14;
-        --bg-2: #14121a;
-        --card: rgba(255, 255, 255, 0.03);
-        --muted: #9aa0b4;
-        --text: #e8e8ee;
-        --accent: #8a63d2;
-        --accent-2: #7b58bb;
-        --glass: rgba(255, 255, 255, 0.04);
-      }
-      body.light-mode {
-        --bg-1: #fff8fb;
-        --bg-2: #fff;
-        --card: rgba(0, 0, 0, 0.04);
-        --muted: #4b5563;
-        --text: #111;
-        --accent: #7b4fd2;
-        --accent-2: #b45cff;
-      }
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      html,
-      body {
-        height: 100%;
-      }
-      body {
-        font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-        color: var(--text);
-        background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
-        -webkit-font-smoothing: antialiased;
-        padding: 28px;
-      }
-      .wrap {
-        max-width: 1000px;
-        margin: 0 auto;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.01),
-          transparent
-        );
-        border: 1px solid var(--card);
-        border-radius: 14px;
-        padding: 26px;
-      }
-      header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        margin-bottom: 18px;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        text-decoration: none;
-        color: var(--text);
-      }
-      .logo {
-        width: 56px;
-        height: 56px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, var(--accent), var(--accent-2));
-        border: 3px solid rgba(255, 255, 255, 0.06);
-      }
-      .logo img {
-        width: 36px;
-        height: 36px;
-      }
-      .brand h1 {
-        font-size: 16px;
-        margin: 0;
-      }
-      nav {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-      }
-      .nav-link {
-        color: var(--muted);
-        text-decoration: none;
-        padding: 8px 10px;
-        border-radius: 8px;
-      }
-      .nav-link:hover {
-        background: var(--glass);
-        color: var(--text);
-      }
-      h2 {
-        margin: 6px 0 12px 0;
-      }
-      .meta {
-        color: var(--muted);
-        font-size: 14px;
-        margin-bottom: 18px;
-      }
-      .toc {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-bottom: 18px;
-      }
-      .card {
-        background: rgba(255, 255, 255, 0.01);
-        border: 1px solid var(--card);
-        padding: 18px;
-        border-radius: 10px;
-        margin-bottom: 14px;
-      }
-      h3 {
-        margin-bottom: 8px;
-      }
-      p {
-        color: var(--muted);
-        line-height: 1.6;
-      }
-      footer {
-        margin-top: 18px;
-        color: var(--muted);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .small {
-        font-size: 13px;
-        color: var(--muted);
-      }
-      @media (max-width: 700px) {
-        .wrap {
-          padding: 18px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="wrap" role="main">
-      <header>
-        <a class="brand" href="index.html" aria-label="StudentGPT home">
-          <span class="logo"><img src="Actual.png" alt="logo" /></span>
-          <div>
-            <h1>StudentGPT</h1>
-            <div class="small">Terms & Conditions</div>
-          </div>
-        </a>
-        <nav>
-          <a class="nav-link" href="Login.html">Sign in</a>
-          <a class="nav-link" href="signup.html">Sign up</a>
-          <button
-            id="mode-btn"
-            class="nav-link"
-            title="Toggle theme"
-            aria-pressed="false"
-          >
-            Theme
-          </button>
-        </nav>
-      </header>
 
-      <section class="card" aria-labelledby="terms-title">
-        <h2 id="terms-title">Terms & Conditions</h2>
-        <div class="meta">Last updated: <strong>2025-09-03</strong></div>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Terms of Service | StudentGPT</title>
+  <meta name="description" content="Legal guidelines for the StudentGPT dimension" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Space+Grotesk:wght@500;700;800&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #010413;
+      --accent: #10b981;
+      --accent-glow: rgba(16, 185, 129, 0.3);
+      --secondary: #6366f1;
+      --panel: rgba(10, 15, 30, 0.8);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #ffffff;
+      --text-dim: #94a3b8;
+    }
 
-        <div class="card" aria-labelledby="use">
-          <h3 id="use">1. Acceptance of terms</h3>
-          <p>
-            By using StudentGPT you agree to these Terms. Use the service only
-            for lawful, ethical study and development. Do not abuse the
-            platform, attempt to reverse-engineer services, or exploit others.
-          </p>
-        </div>
+    body.light-mode {
+      --bg: #f5f9ff;
+      --accent: #059669;
+      --secondary: #4f46e5;
+      --panel: rgba(255, 255, 255, 0.8);
+      --border: rgba(79, 70, 229, 0.1);
+      --text: #0f172a;
+      --text-dim: #475569;
+    }
 
-        <div class="card" aria-labelledby="accounts">
-          <h3 id="accounts">2. Accounts</h3>
-          <p>
-            You are responsible for keeping your account credentials secure.
-            Provide accurate information when registering. StudentGPT may
-            suspend or terminate accounts that violate rules or pose security
-            risks.
-          </p>
-        </div>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        <div class="card" aria-labelledby="content">
-          <h3 id="content">3. Service content & limitations</h3>
-          <p>
-            Outputs generated by the AI are provided for educational assistance
-            only. Verify critical information independently. We are not liable
-            for damages arising from use of generated content.
-          </p>
-        </div>
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
+      transition: background 0.4s ease;
+      line-height: 1.6;
+    }
 
-        <div class="card" aria-labelledby="payments">
-          <h3 id="payments">4. Payments & subscriptions</h3>
-          <p>
-            Paid features (if any) are billed per plan. Refunds, cancellations,
-            and trial policies will be described on purchase. You must provide
-            valid payment details and comply with payment provider terms.
-          </p>
-        </div>
+    /* 3D Grid Backdrop */
+    .grid-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: 
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      transform: perspective(1000px) rotateX(60deg) translateY(-20%) translateZ(-400px);
+      z-index: -1;
+      opacity: 0.2;
+      pointer-events: none;
+    }
 
-        <div class="card" aria-labelledby="changes">
-          <h3 id="changes">5. Changes to Terms</h3>
-          <p>
-            We may update these terms. Continued use after updates implies
-            acceptance. Important changes will be communicated via email or
-            notices in the app.
-          </p>
-        </div>
+    body.light-mode .grid-bg { opacity: 0.35; }
 
-        <div class="card" aria-labelledby="contact">
-          <h3 id="contact">Contact</h3>
-          <p>For questions about these Terms contact: studentgpt00@gmail.com</p>
-        </div>
-      </section>
+    /* Layout */
+    .app-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 24px 120px;
+    }
 
-      <footer>
-        <div class="small">
-          © <strong>StudentGPT</strong> · Developed by Sagar Kamboj
-        </div>
-        <div>
-          <a class="nav-link" href="privacy.html">Privacy Policy</a>
-        </div>
-      </footer>
-    </div>
+    /* Header Nav */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 80px;
+      padding: 20px;
+      background: var(--panel);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      position: sticky;
+      top: 20px;
+      z-index: 100;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
 
-    <script>
-      (function () {
-        const modeBtn = document.getElementById("mode-btn");
-        try {
-          const saved = localStorage.getItem("theme");
-          if (saved === "light") document.body.classList.add("light-mode");
-        } catch (e) {}
-        modeBtn.addEventListener("click", () => {
-          const isLight = document.body.classList.toggle("light-mode");
-          localStorage.setItem("theme", isLight ? "light" : "dark");
-          modeBtn.setAttribute("aria-pressed", !!isLight);
-        });
-      })();
-    </script>
-  </body>
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+
+    .logo-box {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--accent), var(--secondary));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-box img { width: 24px; height: 24px; }
+
+    nav { display: flex; gap: 24px; }
+    nav a { text-decoration: none; color: var(--text-dim); font-weight: 600; font-size: 0.9rem; transition: color 0.3s; }
+    nav a:hover { color: var(--accent); }
+
+    #mode-btn {
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    /* Content Styling */
+    .legal-content {
+      transform-style: preserve-3d;
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -3px;
+      line-height: 0.9;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .gradient-text {
+      background: linear-gradient(to right, var(--accent), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .card-v3 {
+      background: var(--panel);
+      backdrop-filter: blur(40px);
+      border: 1px solid var(--border);
+      padding: 50px;
+      border-radius: 40px;
+      margin-bottom: 40px;
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+    }
+
+    .card-v3:hover {
+      transform: translateY(-8px) scale(1.01);
+      border-color: var(--accent);
+    }
+
+    .section-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .card-v3 h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .card-v3 p {
+      color: var(--text-dim);
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding-top: 60px;
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .app-container { padding: 40px 20px; }
+      nav { display: none; }
+      .card-v3 { padding: 30px; border-radius: 30px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="grid-bg"></div>
+
+  <div class="app-container">
+    <header>
+      <a href="index.html" class="logo">
+        <div class="logo-box"><img src="Actual.png" alt="L"></div>
+        STUDENTGPT
+      </a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="Login.html">Sign In</a>
+        <a href="signup.html">Join Us</a>
+      </nav>
+      <button id="mode-btn">MOON</button>
+    </header>
+
+    <main class="legal-content">
+      <h1 class="hero-title">Terms & <span class="gradient-text">Conditions.</span></h1>
+      <p style="text-align: center; color: var(--text-dim); margin-bottom: 80px; font-size: 1.2rem;">
+        Last updated: <strong>September 03, 2025</strong>
+      </p>
+
+      <div class="card-v3">
+        <span class="section-num">01</span>
+        <h2>Acceptance of terms</h2>
+        <p>By accessing or using StudentGPT, you represent that you have read, understood, and agree to be bound by these Terms of Service. This platform is designed exclusively for educational assistance and building purposes. Any misuse, including automated scraping or reverse-engineering of our AI services, is strictly prohibited.</p>
+      </div>
+
+      <div class="card-v3">
+        <span class="section-num">02</span>
+        <h2>Account integrity</h2>
+        <p>You are the architect of your own identity here. You are responsible for safeguarding your access keys and ensuring that all information provided during signup is accurate. StudentGPT reserves the right to suspend any session that displays suspicious behavioral patterns or violates our community security standards.</p>
+      </div>
+
+      <div class="card-v3">
+        <span class="section-num">03</span>
+        <h2>Service depth & limitations</h2>
+        <p>StudentGPT provides AI-generated study aids, code scripts, and planning logic. While we strive for absolute precision in every dimension, all outputs should be verified by the user. We are not liable for any academic or technical decisions made based on AI-generated content. Think of us as your technical co-pilot, not the pilot.</p>
+      </div>
+
+      <div class="card-v3">
+        <span class="section-num">04</span>
+        <h2>Payments & dimensions</h2>
+        <p>Access to premium study dimensions or specialized AI modules may require a subscription. All transactions are processed through secure global nodes. Refunds and cancellation policies are governed by the specific plan duration selected at the time of uplink.</p>
+      </div>
+
+      <div class="card-v3">
+        <span class="section-num">05</span>
+        <h2>Evolution of Terms</h2>
+        <p>As the StudentGPT dimension expands, we may update these terms to reflect new features or security protocols. Your continued use of the platform after such updates constitutes your acceptance of the new framework. Significant changes will be announced via your registered signal address.</p>
+      </div>
+
+      <div class="card-v3">
+        <h2>Contact Node</h2>
+        <p>Questions regarding our legal framework can be directed to our primary signal address: <strong>studentgpt00@gmail.com</strong></p>
+      </div>
+    </main>
+
+    <footer>
+      <p>© 2026 StudentGPT • Engineered by <strong>SAGAR KAMBOJ</strong></p>
+      <div style="margin-top: 15px;">
+        <a href="privacy.html" style="color: var(--accent); text-decoration: none; font-size: 0.9rem;">Privacy Policy</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const modeBtn = document.getElementById("mode-btn");
+    modeBtn.addEventListener("click", () => {
+      const isLight = document.body.classList.toggle("light-mode");
+      modeBtn.textContent = isLight ? "SUN" : "MOON";
+      localStorage.setItem("theme", isLight ? "light" : "dark");
+    });
+    if (localStorage.getItem("theme") === "light") {
+      document.body.classList.add("light-mode");
+      modeBtn.textContent = "SUN";
+    }
+  </script>
+</body>
+
 </html>

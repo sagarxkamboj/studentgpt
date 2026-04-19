@@ -19,7 +19,7 @@ const allowedOrigins = new Set([
 
 app.use(
   cors({
-    origin: function(origin, callback) {
+    origin: function (origin, callback) {
       const localOrigins = ["http://localhost:4000", "http://localhost:5500", "http://127.0.0.1:5500", "http://localhost:5501", "http://127.0.0.1:5501"];
       if (!origin || localOrigins.includes(origin) || origin.includes("onrender.com")) {
         callback(null, true);
@@ -124,10 +124,10 @@ const EMAIL_PROVIDER = (
   (process.env.RESEND_API_KEY
     ? "resend"
     : process.env.BREVO_API_KEY
-    ? "brevo"
-    : transporter
-    ? "smtp"
-    : "none")
+      ? "brevo"
+      : transporter
+        ? "smtp"
+        : "none")
 ).toLowerCase();
 
 if (EMAIL_PROVIDER === "none") {
@@ -510,7 +510,7 @@ app.delete("/api/conversation/:id", authMiddleware, async (req, res) => {
     }
 
     const deleted = await Conversation.findOneAndDelete({ _id: id, userId });
-    
+
     if (!deleted) {
       return res.status(404).send("Conversation not found or not owned by you");
     }
@@ -542,7 +542,7 @@ app.post("/chatbot-api-endpoint", authMiddleware, async (req, res) => {
     if (!message) return res.status(400).send("Message is required");
 
     const userId = req.user.userId;
-    
+
     // Fetch or Init History from MongoDB
     let conversation;
     if (conversationId) {
@@ -575,6 +575,8 @@ app.post("/chatbot-api-endpoint", authMiddleware, async (req, res) => {
       res.setHeader("Content-Type", "text/event-stream");
       res.setHeader("Cache-Control", "no-cache");
       res.setHeader("Connection", "keep-alive");
+      // Send conversation ID immediately so frontend can bind the session
+      res.write(`data: ${JSON.stringify({ conversationId: conversation._id })}\n\n`);
     }
 
     let fullResponse = "";
@@ -583,7 +585,7 @@ app.post("/chatbot-api-endpoint", authMiddleware, async (req, res) => {
     if (model === "gemini") {
       const geminiModel = genAI.getGenerativeModel({ model: geminiModelId });
       const prompt = conversation.messages.map(m => `${m.role.toUpperCase()}: ${m.content}`).join("\n");
-      
+
       const result = await geminiModel.generateContentStream(prompt);
       for await (const chunk of result.stream) {
         const chunkText = chunk.text();
@@ -594,13 +596,18 @@ app.post("/chatbot-api-endpoint", authMiddleware, async (req, res) => {
       }
     } else if (model === "qwen" || model === "deepseek") {
       const apiKey = model === "qwen" ? process.env.QWEN_API_KEY : process.env.DEEPSEEK_API_KEY;
-      
-      const modelNames = model === "qwen" 
-        ? ["qwen/qwen3.5-122b-a10b", "qwen/qwen2.5-7b-instruct", "qwen/qwq-32b"].filter(Boolean)
-        : ["deepseek-ai/deepseek-v3.1", "deepseek-ai/deepseek-v3.2", "deepseek-ai/deepseek-v3.1-terminus"].filter(Boolean);
+      if (!apiKey) {
+        throw new Error(`${model.toUpperCase()}_API_KEY is missing from environment variables.`);
+      }
+
+      const modelNames = model === "qwen"
+        ? ["qwen/qwen3.6-35b-a3b-fp8", "qwen/qwen3-coder-next", "qwen/qwen3-next-80b-a3b-thinking", "qwen/qwen3-coder-480b-a35b-instruct"].filter(Boolean)
+        : ["deepseek-ai/deepseek-v3.2", "deepseek-ai/deepseek-v3.1-terminus", "deepseek-ai/deepseek-r1", "deepseek-ai/deepseek-v3"].filter(Boolean);
 
       const apiUrls = [
         process.env[`${model.toUpperCase()}_API_URL`],
+        `https://integrate.api.nvidia.com/v1/chat/completions`,
+        model === "qwen" ? "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions" : "https://api.deepseek.com/v1/chat/completions",
         `https://ai.api.nvidia.com/v1/chat/completions`
       ].filter(Boolean);
 
@@ -635,31 +642,44 @@ app.post("/chatbot-api-endpoint", authMiddleware, async (req, res) => {
       }
 
       if (!response || !response.ok) {
-        throw new Error(`${model} API all attempts failed: ${lastError}`);
+        let errorDetail = lastError;
+        try {
+          const errJson = JSON.parse(lastError);
+          errorDetail = errJson.detail || errJson.message || (errJson.error && errJson.error.message) || lastError;
+        } catch(e) {}
+        throw new Error(`${model.toUpperCase()} API Error (${response ? response.status : 'Fetch Failed'}): ${errorDetail}`);
       }
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
-      
+      let buffer = "";
+
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        
-        const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split("\n");
-        
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop(); // Keep partial line
+
         for (const line of lines) {
-          if (line.trim().startsWith("data: ")) {
-            const dataStr = line.trim().slice(6);
-            if (dataStr === "[DONE]") break;
-            try {
-              const data = JSON.parse(dataStr);
-              const content = data.choices[0]?.delta?.content || "";
+          const trimmedLine = line.trim();
+          if (!trimmedLine || !trimmedLine.startsWith("data: ")) continue;
+
+          const dataStr = trimmedLine.slice(6);
+          if (dataStr === "[DONE]") break;
+
+          try {
+            const data = JSON.parse(dataStr);
+            const content = data.choices[0]?.delta?.content || "";
+            if (content) {
               fullResponse += content;
               if (stream) {
                 res.write(`data: ${JSON.stringify({ chunk: content })}\n\n`);
               }
-            } catch (e) {}
+            }
+          } catch (e) {
+            // Silently handle parse errors for partial chunks
           }
         }
       }
@@ -682,6 +702,35 @@ app.post("/chatbot-api-endpoint", authMiddleware, async (req, res) => {
       res.write(`data: ${JSON.stringify({ error: err.message })}\n\n`);
       res.end();
     }
+  }
+});
+
+/* ---------------------
+   History Management
+   --------------------- */
+// Clear all history for a user
+app.delete("/api/chat-history", authMiddleware, async (req, res) => {
+  try {
+    await Conversation.deleteMany({ userId: req.user.userId });
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to clear history" });
+  }
+});
+
+// Delete a specific conversation
+app.delete("/api/conversation/:id", authMiddleware, async (req, res) => {
+  try {
+    const result = await Conversation.deleteOne({ 
+      _id: req.params.id, 
+      userId: req.user.userId 
+    });
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ error: "Conversation not found" });
+    }
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to delete conversation" });
   }
 });
 

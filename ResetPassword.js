@@ -1,9 +1,5 @@
-﻿document.getElementById("send-otp").onclick = async function () {
-  const API_BASE =
-    ["localhost", "127.0.0.1", ""].includes(window.location.hostname) ||
-    window.location.protocol === "file:"
-      ? "http://localhost:4000"
-      : "https://studentgpt-4zbc.onrender.com";
+document.getElementById("send-otp").onclick = async function () {
+  const API_BASE = "https://studentgpt-4zbc.onrender.com";
   const email = document.getElementById("email").value;
   if (!email) return setMsg("Enter your registered email.");
   setMsg("Sending OTP...");
@@ -21,11 +17,7 @@
 };
 
 document.getElementById("reset-form").onsubmit = async function (e) {
-  const API_BASE =
-    ["localhost", "127.0.0.1", ""].includes(window.location.hostname) ||
-    window.location.protocol === "file:"
-      ? "http://localhost:4000"
-      : "https://studentgpt-4zbc.onrender.com";
+  const API_BASE = "https://studentgpt-4zbc.onrender.com";
   e.preventDefault();
   const email = document.getElementById("email").value;
   const otp = document.getElementById("otp").value.trim();

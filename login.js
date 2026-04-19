@@ -1,4 +1,4 @@
-﻿document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
   "use strict";
 
   const form = document.getElementById("loginForm");
@@ -11,33 +11,12 @@
   const passInput = document.getElementById("login-password");
   const submitBtn = form.querySelector('button[type="submit"]');
   const modeBtn = document.getElementById("mode-btn");
-  const API_BASE =
-    ["localhost", "127.0.0.1", ""].includes(window.location.hostname) ||
-    window.location.protocol === "file:"
-      ? "http://localhost:4000"
-      : "https://studentgpt-4zbc.onrender.com";
+  const API_BASE = "https://studentgpt-4zbc.onrender.com";
+  // Fallback for local development if needed
+  const DEV_API = "http://localhost:4000";
   const API_URL = `${API_BASE}/login`;
 
-  // Apply saved theme on load
-  try {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "light") document.body.classList.add("light-mode");
-    else document.body.classList.remove("light-mode");
-    if (modeBtn)
-      modeBtn.textContent = savedTheme === "light" ? "Light Mode" : "Dark Mode";
-  } catch (e) {
-    /* ignore */
-  }
 
-  // Theme toggle handler
-  if (modeBtn) {
-    modeBtn.addEventListener("click", () => {
-      const isLight = document.body.classList.toggle("light-mode");
-      localStorage.setItem("theme", isLight ? "light" : "dark");
-      modeBtn.textContent = isLight ? "Light Mode" : "Dark Mode";
-      modeBtn.setAttribute("aria-pressed", isLight ? "true" : "false");
-    });
-  }
 
   if (!emailInput || !passInput) {
     console.error("login-email or login-password input missing.");

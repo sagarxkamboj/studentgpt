@@ -1,454 +1,343 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>StudentGPT | Login</title>
-    <meta name="description" content="Login to StudentGPT" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --bg: #07111f;
-        --bg-soft: #0d1c32;
-        --panel: rgba(9, 17, 32, 0.72);
-        --panel-2: rgba(255, 255, 255, 0.05);
-        --line: rgba(159, 195, 255, 0.14);
-        --line-strong: rgba(159, 195, 255, 0.24);
-        --text: #eef4ff;
-        --muted: #9dafc7;
-        --accent: #74f2ce;
-        --accent-2: #66a6ff;
-        --danger: #ff8d8d;
-        --shadow: 0 30px 90px rgba(0, 0, 0, 0.38);
-      }
-      body.light-mode {
-        --bg: #f3f7ff;
-        --bg-soft: #eef4fb;
-        --panel: rgba(255, 255, 255, 0.78);
-        --panel-2: rgba(20, 35, 70, 0.04);
-        --line: rgba(45, 77, 136, 0.14);
-        --line-strong: rgba(45, 77, 136, 0.2);
-        --text: #101a2b;
-        --muted: #5d6d86;
-        --accent: #0ea87e;
-        --accent-2: #3f73ff;
-        --shadow: 0 24px 72px rgba(57, 77, 120, 0.14);
-      }
-      * { box-sizing: border-box; margin: 0; padding: 0; }
-      body {
-        min-height: 100vh;
-        font-family: "Manrope", system-ui, sans-serif;
-        color: var(--text);
-        background:
-          radial-gradient(circle at 12% 18%, rgba(102, 166, 255, 0.18), transparent 24%),
-          radial-gradient(circle at 86% 18%, rgba(116, 242, 206, 0.14), transparent 24%),
-          linear-gradient(180deg, var(--bg), var(--bg-soft));
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 18px;
-        overflow-x: hidden;
-      }
-      body::before,
-      body::after {
-        content: "";
-        position: fixed;
-        width: 30rem;
-        height: 30rem;
-        border-radius: 999px;
-        filter: blur(90px);
-        opacity: 0.28;
-        pointer-events: none;
-      }
-      body::before { top: -10rem; left: -10rem; background: rgba(102, 166, 255, 0.28); }
-      body::after { right: -8rem; bottom: -10rem; background: rgba(116, 242, 206, 0.2); }
-      a, button, input { font: inherit; }
-      #logo-link {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        text-decoration: none;
-        z-index: 5;
-      }
-      #logo-link img {
-        width: 84px;
-        height: 84px;
-        border-radius: 22px;
-        object-fit: cover;
-        border: 1px solid var(--line-strong);
-        box-shadow: var(--shadow);
-      }
-      #mode-btn {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 5;
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.06);
-        color: var(--text);
-        border-radius: 999px;
-        padding: 12px 16px;
-        font-weight: 700;
-        cursor: pointer;
-      }
-      .page-wrap {
-        width: min(1120px, 100%);
-        position: relative;
-        z-index: 1;
-      }
-      .auth-shell {
-        display: grid;
-        grid-template-columns: minmax(0, 0.95fr) minmax(360px, 0.75fr);
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.04);
-        border-radius: 34px;
-        padding: 18px;
-        gap: 12px;
-        backdrop-filter: blur(16px);
-        box-shadow: var(--shadow);
-      }
-      .showcase,
-      .card {
-        border-radius: 28px;
-        border: 1px solid var(--line);
-        background: var(--panel);
-        backdrop-filter: blur(16px);
-      }
-      .showcase {
-        padding: 24px;
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        min-height: 520px;
-      }
-      .showcase::after {
-        content: "";
-        position: absolute;
-        right: -70px;
-        top: -40px;
-        width: 240px;
-        height: 240px;
-        border-radius: 999px;
-        background: radial-gradient(circle, rgba(116, 242, 206, 0.22), transparent 65%);
-      }
-      .eyebrow {
-        display: inline-flex;
-        padding: 8px 14px;
-        border-radius: 999px;
-        border: 1px solid var(--line-strong);
-        color: var(--accent);
-        font-size: 0.78rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        background: rgba(255, 255, 255, 0.04);
-      }
-      h1, h2, h3 {
-        font-family: "Space Grotesk", sans-serif;
-        letter-spacing: -0.04em;
-      }
-      .showcase h1 {
-        font-size: clamp(2.2rem, 4vw, 3.6rem);
-        line-height: 0.94;
-        margin: 16px 0 14px;
-        max-width: 8ch;
-      }
-      .accent-text {
-        background: linear-gradient(135deg, var(--accent), var(--accent-2));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-      }
-      .showcase p {
-        color: var(--muted);
-        line-height: 1.8;
-        max-width: 56ch;
-      }
-      .showcase-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-        margin-top: 18px;
-      }
-      .showcase-card,
-      .mini-chat {
-        border-radius: 22px;
-        background: var(--panel-2);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-      }
-      .showcase-card {
-        padding: 18px;
-      }
-      .showcase-card span {
-        display: block;
-        font-size: 0.8rem;
-        color: var(--muted);
-        margin-bottom: 8px;
-      }
-      .showcase-card strong {
-        font-size: 1.08rem;
-      }
-      .mini-chat {
-        margin-top: 18px;
-        padding: 18px;
-        display: grid;
-        gap: 10px;
-      }
-      .mini-bubble {
-        padding: 12px 14px;
-        border-radius: 18px;
-        line-height: 1.6;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-      }
-      .mini-bubble.user {
-        margin-left: 34px;
-        background: linear-gradient(135deg, rgba(102, 166, 255, 0.18), rgba(116, 242, 206, 0.12));
-      }
-      .card {
-        padding: 24px 22px;
-        align-self: center;
-      }
-      .card h2 {
-        font-size: 2rem;
-        margin-bottom: 10px;
-      }
-      .lead {
-        color: var(--muted);
-        margin-bottom: 16px;
-        line-height: 1.75;
-      }
-      .field { margin-bottom: 16px; }
-      label {
-        display: block;
-        font-size: 0.92rem;
-        font-weight: 700;
-        margin-bottom: 8px;
-      }
-      input[type="email"],
-      input[type="password"],
-      input[type="text"] {
-        width: 100%;
-        padding: 15px 16px;
-        border-radius: 18px;
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.04);
-        color: var(--text);
-        outline: none;
-        transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-      }
-      input::placeholder { color: var(--muted); }
-      input:focus {
-        border-color: rgba(116, 242, 206, 0.54);
-        box-shadow: 0 0 0 4px rgba(116, 242, 206, 0.1);
-        transform: translateY(-1px);
-      }
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        border: none;
-        border-radius: 999px;
-        padding: 15px 18px;
-        cursor: pointer;
-        font-weight: 800;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-      }
-      .btn:hover { transform: translateY(-2px); }
-      .btn-primary {
-        color: #07111f;
-        background: linear-gradient(135deg, var(--accent), var(--accent-2));
-        box-shadow: 0 16px 34px rgba(102, 166, 255, 0.2);
-      }
-      .meta-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
-        margin-top: 12px;
-        flex-wrap: wrap;
-      }
-      .small-link {
-        color: var(--text);
-        text-decoration: none;
-        font-size: 0.92rem;
-        font-weight: 700;
-      }
-      .small-link:hover { color: var(--accent); }
-      .sep {
-        margin: 24px 0 18px;
-        border: none;
-        border-top: 1px solid var(--line);
-      }
-      .terms {
-        color: var(--muted);
-        font-size: 0.92rem;
-        line-height: 1.7;
-      }
-      .terms a { color: inherit; }
-      .float-in {
-        opacity: 0;
-        transform: translateY(20px);
-        animation: enterUp 0.8s ease forwards;
-      }
-      .delay-1 { animation-delay: 0.08s; }
-      .delay-2 { animation-delay: 0.18s; }
-      @keyframes enterUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      @media (max-height: 860px) {
-        body { padding: 12px; overflow: hidden; }
-        .page-wrap { width: min(560px, 100%); }
-        .auth-shell { grid-template-columns: 1fr; padding: 10px; gap: 10px; max-height: calc(100vh - 24px); }
-        .showcase { display: none; }
-        .card { padding: 20px 18px; }
-        .card h2 { font-size: 1.7rem; }
-        .lead { font-size: 0.94rem; margin-bottom: 14px; }
-        .field { margin-bottom: 12px; }
-        input[type="email"], input[type="password"], input[type="text"], input[type="tel"], input[type="number"] { padding: 13px 14px; }
-        .btn, .btn-primary { padding-top: 13px; padding-bottom: 13px; }
-        .sep { margin: 18px 0 14px; }
-        .otp-panel { margin-top: 14px; padding: 14px; }
-      }
 
-      @media (max-width: 980px) {
-        .auth-shell { grid-template-columns: 1fr; }
-        .showcase { min-height: auto; }
-      }
-      @media (max-width: 640px) {
-        body { padding: 16px; }
-        #logo-link img { width: 68px; height: 68px; border-radius: 18px; }
-        #mode-btn { top: 16px; right: 16px; padding: 10px 14px; }
-        .auth-shell { padding: 10px; border-radius: 24px; }
-        .showcase, .card { padding: 22px; border-radius: 22px; }
-        .showcase-grid { grid-template-columns: 1fr; }
-        .meta-row { flex-direction: column; align-items: flex-start; }
-      }
-    </style>
-  </head>
-  <body>
-    <a id="logo-link" href="index.html" title="Go to landing page" aria-label="Go to landing page">
-      <img src="Actual.png" alt="StudentGPT logo" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>StudentGPT | Login Interface</title>
+  <meta name="description" content="Access your 3D AI study dimension" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Space+Grotesk:wght@500;700;800&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #010413;
+      --accent: #10b981;
+      --accent-glow: rgba(16, 185, 129, 0.3);
+      --secondary: #6366f1;
+      --panel: rgba(10, 15, 30, 0.85);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #ffffff;
+      --text-dim: #94a3b8;
+    }
+
+    body.light-mode {
+      --bg: #f5f9ff;
+      --accent: #059669;
+      --secondary: #4f46e5;
+      --panel: rgba(255, 255, 255, 0.8);
+      --border: rgba(79, 70, 229, 0.1);
+      --text: #0f172a;
+      --text-dim: #475569;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      perspective: 2000px;
+      padding: 24px;
+      transition: background 0.4s ease;
+    }
+
+    /* 3D Grid Floor (Matching Landing) */
+    .grid-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: 
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      transform: perspective(1000px) rotateX(60deg) translateY(-20%) translateZ(-400px);
+      z-index: -1;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    body.light-mode .grid-bg {
+      opacity: 0.4;
+      background-image: 
+        linear-gradient(rgba(79, 70, 229, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79, 70, 229, 0.08) 1px, transparent 1px);
+    }
+
+    /* Navigation / Back */
+    .header-links {
+      position: fixed;
+      top: 30px;
+      left: 0;
+      width: 100%;
+      padding: 0 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .brand-back {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+    }
+
+    .brand-back:hover { transform: scale(1.05); }
+
+    .brand-back img {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      filter: drop-shadow(0 0 8px var(--accent-glow));
+    }
+
+    #mode-btn {
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    body.light-mode #mode-btn {
+       background: #0f172a;
+       color: #fff;
+    }
+
+    /* Dimensional Auth Card */
+    .auth-card {
+      width: 100%;
+      max-width: 480px;
+      background: var(--panel);
+      backdrop-filter: blur(40px);
+      border: 1px solid var(--border);
+      border-radius: 48px;
+      padding: 56px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease-out;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+      z-index: 1;
+    }
+
+    .auth-card h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: -1.5px;
+      transform: translateZ(50px);
+    }
+
+    .auth-card .lead {
+      color: var(--text-dim);
+      font-size: 1.1rem;
+      margin-bottom: 36px;
+      line-height: 1.6;
+      transform: translateZ(40px);
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+      transform: translateZ(30px);
+    }
+
+    label {
+      display: block;
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    input {
+      width: 100%;
+      background: rgba(0,0,0,0.2);
+      border: 1.5px solid var(--border);
+      padding: 18px 24px;
+      border-radius: 18px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    body.light-mode input {
+      background: rgba(255,255,255,0.8);
+      border-color: rgba(79, 70, 229, 0.1);
+      color: #0f172a;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      background: rgba(0,0,0,0.4);
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.15);
+    }
+
+    .btn-3d {
+      width: 100%;
+      padding: 20px;
+      border-radius: 50px;
+      border: none;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--accent), var(--secondary));
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 8px 0 #064e3b, 0 15px 30px rgba(0,0,0,0.3);
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      margin-top: 12px;
+      transform: translateZ(60px);
+    }
+
+    .btn-3d:hover {
+      transform: translateZ(70px) translateY(-4px);
+      box-shadow: 0 12px 0 #064e3b, 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .btn-3d:active {
+      transform: translateZ(60px) translateY(4px);
+      box-shadow: 0 0px 0 #064e3b;
+    }
+
+    .auth-links {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 24px;
+      transform: translateZ(20px);
+    }
+
+    .auth-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .auth-links a:hover { color: var(--text); }
+
+    .sep {
+       margin: 32px 0;
+       border: none;
+       border-top: 1px solid var(--border);
+       transform: translateZ(10px);
+    }
+
+    .footer-text {
+       text-align: center;
+       color: var(--text-dim);
+       font-size: 0.85rem;
+       line-height: 1.6;
+       transform: translateZ(20px);
+    }
+
+    .footer-text a { color: var(--accent); text-decoration: none; font-weight: 700; }
+
+    @media (max-width: 640px) {
+       .auth-card { padding: 40px 24px; border-radius: 32px; }
+       .header-links { padding: 0 20px; }
+       .brand-back span { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="grid-bg"></div>
+
+  <div class="header-links">
+    <a href="index.html" class="brand-back">
+      <img src="Actual.png" alt="Logo">
+      <span>STUDENTGPT</span>
     </a>
+    <button id="mode-btn">MOON</button>
+  </div>
 
-    <button id="mode-btn" type="button" aria-pressed="false" title="Toggle theme">Moon</button>
+  <main>
+    <div class="auth-card" id="authCard">
+      <h1>Sign in.</h1>
+      <p class="lead">Step back into the dimension of fast learning and smart coding.</p>
 
-    <main class="page-wrap" role="main" aria-labelledby="login-heading">
-      <section class="auth-shell">
-        <aside class="showcase float-in delay-1">
-          <div>
-            <span class="eyebrow">Student workspace login</span>
-            <h1>
-              Welcome back to your
-              <span class="accent-text">study engine.</span>
-            </h1>
-            <p>
-              Pick up where you left off with debugging help, clean explanations, faster assignment flow,
-              and the same StudentGPT backend you already built.
-            </p>
-          </div>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="login-email">Identifier (Email)</label>
+          <input type="email" id="login-email" name="email" placeholder="YOU@EXAMPLE.COM" required>
+        </div>
 
-          <div>
-            <div class="showcase-grid">
-              <div class="showcase-card">
-                <span>Mode</span>
-                <strong>Project + Code Assist</strong>
-              </div>
-              <div class="showcase-card">
-                <span>Focus</span>
-                <strong>Fast, readable output</strong>
-              </div>
-            </div>
-            <div class="mini-chat" aria-hidden="true">
-              <div class="mini-bubble">Summarize my OS unit in viva-ready points and short notes.</div>
-              <div class="mini-bubble user">Also explain the logic in simple words for revision.</div>
-              <div class="mini-bubble">Done. I will keep it short, structured, and easy to revise.</div>
-            </div>
-          </div>
-        </aside>
+        <div class="form-group">
+          <label for="login-password">Access Key (Password)</label>
+          <input type="password" id="login-password" name="password" placeholder="••••••••" required>
+        </div>
 
-        <section class="card float-in delay-2" role="region" aria-label="Login panel">
-          <h2 id="login-heading">Sign in</h2>
-          <p class="lead">
-            Continue to StudentGPT and jump back into coding help, project planning, and smart study support.
-          </p>
+        <button type="submit" class="btn-3d">Initiate Session</button>
 
-          <form id="loginForm" novalidate autocomplete="on" aria-describedby="login-help">
-            <div class="field">
-              <label for="login-email">Email</label>
-              <input
-                id="login-email"
-                name="email"
-                type="email"
-                inputmode="email"
-                autocomplete="email"
-                placeholder="you@example.com"
-                required
-              />
-            </div>
+        <div class="auth-links">
+          <a href="ResetPassword.html">Forgot Access?</a>
+          <a href="signup.html">Create Identity</a>
+        </div>
 
-            <div class="field">
-              <label for="login-password">Password</label>
-              <input
-                id="login-password"
-                name="password"
-                type="password"
-                autocomplete="current-password"
-                placeholder="Enter your password"
-                required
-              />
-            </div>
+        <hr class="sep">
 
-            <div class="field">
-              <button class="btn btn-primary" type="submit" aria-label="Sign in">Sign In</button>
-            </div>
+        <p class="footer-text">
+          By initiating a session, you agree to our <br>
+          <a href="terms.html">Terms</a> & <a href="privacy.html">Privacy</a>.
+        </p>
+      </form>
+    </div>
+  </main>
 
-            <div class="meta-row" id="login-help">
-              <a class="small-link" href="ResetPassword.html">Forgot password?</a>
-              <a class="small-link" href="signup.html">Create account</a>
-            </div>
+  <script>
+    // Theme Sync
+    const modeBtn = document.getElementById("mode-btn");
+    modeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("light-mode");
+      modeBtn.textContent = document.body.classList.contains("light-mode") ? "SUN" : "MOON";
+      localStorage.setItem("theme", document.body.classList.contains("light-mode") ? "light" : "dark");
+    });
 
-            <hr class="sep" />
+    // Handle initial theme
+    if (localStorage.getItem("theme") === "light") {
+      document.body.classList.add("light-mode");
+      modeBtn.textContent = "SUN";
+    }
 
-            <p class="terms">
-              By signing in you agree to our
-              <a class="small-link" href="terms.html">Terms</a>
-              and
-              <a class="small-link" href="privacy.html">Privacy Policy</a>.
-            </p>
-          </form>
-        </section>
-      </section>
-    </main>
+    // 3D Tilt Card Effect
+    const card = document.getElementById('authCard');
+    document.addEventListener("mousemove", (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 30;
+      const y = (e.clientY / window.innerHeight - 0.5) * 30;
+      card.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+    });
+  </script>
+  <script src="login.js" defer></script>
+</body>
 
-    <noscript>
-      <div
-        style="position: fixed; bottom: 18px; left: 18px; background: #222; padding: 8px 12px; border-radius: 8px; color: #fff;"
-      >
-        JavaScript is required for this site. Please enable JavaScript in your browser.
-      </div>
-    </noscript>
-
-    <script>
-      try {
-        const saved = localStorage.getItem("theme");
-        if (saved === "light") {
-          document.body.classList.add("light-mode");
-          document.getElementById("mode-btn").textContent = "Sun";
-        }
-      } catch (e) {}
-    </script>
-    <script src="login.js" defer></script>
-  </body>
 </html>
-
-
